@@ -2,12 +2,12 @@ import * as Discord from 'discord.js';
 import { User } from './model';
 import { Connection } from 'typeorm';
 
-interface CreateUserOptions {
+export interface CreateUserOptions {
     createdFromBark?: boolean;
     createdFromYTB?: boolean;
 }
 
-type CreateUserFunc =
+export type CreateUserFunc =
     (discordUser: Discord.User,
         connection: Connection,
         options?: CreateUserOptions) => Promise<boolean>;

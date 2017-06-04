@@ -11,7 +11,7 @@ const reverseMustache = require('reverse-mustache');
 export type CommandFunction =
     (message: Discord.Message,
         definition: CommandDefinition,
-        parameters: Parameterdefinition,
+        parameters: ParameterDefinition,
         client: Discord.Client) => Promise<boolean>;
 
 /// Note this is not a middleware, it cannot shut down the message chain.
@@ -26,7 +26,7 @@ export type MiddlewareFunction =
  * Reference a function cache instead of creating
  * a new instance of a function for every aliased command.
  */
-interface CommandObject {
+export interface CommandObject {
     definition: CommandDefinition;
     information?: CommandDescription;
     symbol: Symbol;
@@ -34,7 +34,7 @@ interface CommandObject {
     pattern?: boolean;
 }
 
-interface CommandList {
+export interface CommandList {
     [key: string]: Symbol;
 }
 
@@ -76,20 +76,21 @@ export interface CommandAction {
     pattern?: RegExp;
 }
 
-interface CommandDescription {
+export interface CommandDescription {
     /** The message to be shown to the user in the command description. */
     message: string;
     /** An example in the code block for the use of the command. */
     example?: string;
 }
 
-interface Parameterdefinition {
+export interface ParameterDefinition {
     array: string[];
     named?: {
         [key: string]: string;
     };
 }
-interface Prefixer {
+
+export interface Prefixer {
     str: string;
     regex: RegExp;
 }
@@ -553,7 +554,7 @@ export class Commands {
      *
      * @memberof Commands
      */
-    private createParameters(parameterArray: string[], definition: CommandDefinition, message: Discord.Message): Parameterdefinition {
+    private createParameters(parameterArray: string[], definition: CommandDefinition, message: Discord.Message): ParameterDefinition {
         const templater = {
             template: definition.command.parameters,
             content: parameterArray.join(' '),

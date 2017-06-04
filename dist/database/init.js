@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+exports.Connection = typeorm_1.Connection;
 const entities_1 = require("./entities");
 require("reflect-metadata");
 const connectionOptions = {
