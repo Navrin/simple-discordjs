@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": false,
+        "strict": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noLib": false,
+        "outDir": "dist",
+        "sourceMap": true,
+        "noUnusedLocals": true,
+        "pretty": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "es6",
+            "es7",
+            "dom"
+        ]
+    },
+    "include": [
+        "typings.d.ts",
+        "src/**/**.*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
