@@ -19,7 +19,10 @@ new Commands(configJson.prefix, client)
             name: ['p', 'ping'],
             action: ping,
         },
-        description: 'Replies with pong.',
+        description: {
+            message: 'Replies with pong.',
+            example: '{{prefix}}ping',
+        }
     })
     .defineCommand({
         command: {
@@ -28,7 +31,10 @@ new Commands(configJson.prefix, client)
             pattern: /p[oa]ng/,
         },
         authentication: RoleTypes.ADMIN,
-        description: 'A joke reply to pong',
+        description: {
+            message: 'A joke reply to pong',
+            example: 'pang'
+        }
     })
     .generateHelp()
     .listen();
@@ -40,7 +46,7 @@ The `.use` syntax on the class is a form of middleware, accepting a promise that
 
 ```typescript
 new Commands(configJson.prefix, client)
-    .use(async (message, options client) => {
+    .use(async (message, options, parameters, client) => {
         // do stuff to check the message.
         return true;
     });
@@ -59,6 +65,8 @@ Syntax is as follows
 ```typescript
 const limiter = new RateLimiter(['messages allowed per window'],
                                 ['window length in seconds'])
+
+                new RateLimiter(10, 5) // 10 messages every 5 seconds
 ```
 
 A window is the period of time the user will be allowed to send message, within the limit. After the limit is reached, the bot will not respond to any messages from the user until the window is reset. Pass to the middleware acceptor with,
@@ -70,7 +78,7 @@ new Commander(prefix, client)
 
 ### **Authentication Module**
 
-The auth module exposes a middleware function and a command object for the user. It uses a SQLite database to keep tract of what roles have what permissions on a server. All the roles are set up in a enumerable with 5 properties.
+The auth module exposes a middleware function and a command object for the user. It uses a SQLite database to keep track of what roles have what permissions on a server. All the roles are set up in a enumerable with 5 properties.
 
 ```typescript
 enum RoleTypes {
@@ -82,7 +90,7 @@ enum RoleTypes {
 };
 ```
 
-**Due to properties being simple numbers, roles have hierarchy. A superuser will have access to all commands as it is the highest number.**
+**Due to properties being simple numbers, roles have hierarchy. A superuser will have access to all commands as it is the highest number.** Admins will be able to use all mod and admin commands, and owners will be able to use all mod, admin and owner commands, etc.
 
 `Superuser` should be your user ID.
 
@@ -90,11 +98,15 @@ enum RoleTypes {
 
 `Admin | Mod` is set via the `!addrole` command. Only server owners or the superuser may use addrole.
 
+`!addrole mod @roleGroup`
+
 Usage is as follows:
 
 ```typescript
 
-const auth = new Auth(superuserToken); // superuser token should be your discord user ID, you will have access to all commands.
+const auth = new Auth(superuserToken);
+// superuser token should be your discord user ID,
+// you will have access to all commands.
 
 new Commands(prefix, client)
     .use(auth.authenticate)
@@ -113,7 +125,7 @@ The `.defineCommand` function defines a chat command that takes an `action`, a f
         command: {
             name: ['action', 'a', 'actionname']
             action:
-                (message: Discord.Message,
+               (message: Discord.Message,
                 options: CommandOptions,
                 parameters: ParameterOptions,
                 client: Discord.Client) => Promise<boolean>,
@@ -121,8 +133,6 @@ The `.defineCommand` function defines a chat command that takes an `action`, a f
             noPrefix: false,
             // a boolean that represents if the function
             // requres an explicit call, like .action or !action
-            // additional options can be found in the full documentation.
-
         },
         description:  {
             message: 'A description of the function, for the generator',
@@ -138,12 +148,26 @@ For regex matching, pass a `pattern: RegExp` in the command object.
 Reverse string templating is supported with the `parameter` option in the function description. Parameters are defined with `{{parameter}}`, and are passed as an object to the action. Strings must match to register, you cannot ignore parts of message, e.g. `'action verb noun' !== '{{action}} ignore {{noun}}'`. Instead, match it and add a junk name to it, e.g. `'action verb noun' === '{{action}} {{ignored}} {{noun}}'`.
 
 ```typescript
-// called with .param ADD 1 2.
+    export interface ParameterDefinition {
+        array: string[];
+        named?: {
+            [key: string]: string;
+        };
+    }
+
+    // called with .param ADD 1 2.
     .defineCommand(['param'], {
         command: {
-            action: (message, options, params) => {
-                console.log(params);
-                // { directive: 'ADD', num1: '1', num2: '2' }
+            action: (message, options, params: ParameterDefintion) => {
+                console.log(params)
+                // {
+                //     array: ['add', '1', '2'],
+                //     named: {
+                //        directive: 'ADD',
+                //        num1: '1',
+                //        num2: '2'
+                //     }
+                // }
             },
             parameters: '{{directive}} {{num1}} {{num2}}',
         }
@@ -171,3 +195,13 @@ The returned help function looks as follows:
 ![helper](https://i.imgur.com/wBOdcK6.png)
 
 *Please do not remove the signature from the source code, it would be appreciated if you left that in for developers looking to use this library.*
+
+### Bot Types
+
+Bots can have multiple different types, including a self type for selfbots.
+
+Type          | Description
+--------------|------------
+`'normal'`    | Standard default bot type, replies to all messages in all channels.
+`'self'`      | Selfbot, limited to only repling to its own client.id messages.
+`'guildonly'` | Limits the bot to only reply messages sent in a guild channel. Users will not be able to interact with the bot in DMs.
