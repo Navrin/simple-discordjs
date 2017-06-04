@@ -66,7 +66,7 @@ class Commands {
                 case 'self':
                     return (message) => this.client.user.id === message.author.id;
                 case 'guildonly':
-                    return (message) => message.channel.type === 'group';
+                    return (message) => message.channel.type === 'text';
                 default:
                     return (message) => true;
             }

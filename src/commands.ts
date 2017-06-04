@@ -410,7 +410,7 @@ export default class Commands {
             case 'self':
                 return (message: Discord.Message) => this.client.user.id === message.author.id;
             case 'guildonly':
-                return (message: Discord.Message) => message.channel.type === 'group';
+                return (message: Discord.Message) => message.channel.type === 'text';
             default:
                 return (message: Discord.Message) => true;
         }
