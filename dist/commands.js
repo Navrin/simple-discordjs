@@ -27,7 +27,7 @@ exports.CommandError = CommandError;
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
- * import
+ * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
  *
  * new Commands(prefix, client)
  *  .use(rateLimit.protect)
@@ -58,6 +58,19 @@ class Commands {
      * @memberof Commands
      */
     constructor(prefix, client) {
+        /***********
+         * PRIVATE *
+         ***********/
+        this.botVerify = (botType) => {
+            switch (botType) {
+                case 'self':
+                    return (message) => this.client.user.id === message.author.id;
+                case 'guildonly':
+                    return (message) => message.channel.type === 'group';
+                default:
+                    return (message) => true;
+            }
+        };
         this.defaultPrefix = {
             str: prefix,
             regex: new RegExp(`(${escapeStringRegexp(prefix)})?(.+)`),
@@ -277,18 +290,18 @@ class Commands {
      *
      * @memberof Commands
      */
-    listen(customFunc) {
+    listen(botType = 'normal', customFunc) {
+        const verifier = this.botVerify(botType);
         this.client.on('message', (discordMessage) => {
             if (customFunc) {
                 customFunc(discordMessage);
             }
-            this.message(discordMessage);
+            if (verifier(discordMessage)) {
+                this.message(discordMessage);
+            }
         });
         return this;
     }
-    /***********
-     * PRIVATE *
-     ***********/
     /**
      * Pattern Command, for regex matching commands.
      * requires a commandNames parameter for help command support, and

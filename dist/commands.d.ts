@@ -80,7 +80,7 @@ export declare class CommandError extends Error {
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
- * import
+ * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
  *
  * new Commands(prefix, client)
  *  .use(rateLimit.protect)
@@ -186,10 +186,11 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    listen(customFunc?: PreMessageFunction): Commands;
+    listen(botType?: 'normal' | 'self' | 'guildonly', customFunc?: PreMessageFunction): Commands;
     /***********
      * PRIVATE *
      ***********/
+    private botVerify;
     /**
      * Pattern Command, for regex matching commands.
      * requires a commandNames parameter for help command support, and

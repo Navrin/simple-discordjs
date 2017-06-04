@@ -55,7 +55,7 @@ export interface CommandDefinition {
 export interface CommandAction {
     action: CommandFunction;
     names: string[];
-        /**  if true, the message wont need a chat prefix to be called */
+    /**  if true, the message wont need a chat prefix to be called */
     noPrefix?: boolean;
     /** The optional parameters the function will take
      *   parameters: '{{actionOption}} with {{value}}',
@@ -106,7 +106,7 @@ export class CommandError extends Error { };
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
- * import 
+ * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
  * 
  * new Commands(prefix, client)
  *  .use(rateLimit.protect)
@@ -134,6 +134,7 @@ export default class Commands {
     private patterns: Map<RegExp, Symbol>;
     private funcs: Map<Symbol, CommandObject>;
     private middlewares: MiddlewareFunction[];
+
     /**
      * Creates an instance of Commands.
      * @param {string} prefix  The command prefix used for all
@@ -154,6 +155,7 @@ export default class Commands {
         this.middlewares = [];
         return this;
     }
+
     /**
      * Middleware Support. Middlewares will take 2 arguments.
      * `(message: Discord.Message, client: Discord.Client)`
@@ -174,7 +176,6 @@ export default class Commands {
         this.middlewares.push(middleware);
         return this;
     }
-
 
     /**
      * defineCommand is the basis of the command class.
@@ -264,6 +265,7 @@ export default class Commands {
             throw e;
         }
     }
+
     /**
      * Generates a prefixed help command from the current commands.
      * @param {Discord.RichEmbed} descriptor
@@ -374,7 +376,6 @@ export default class Commands {
         return this;
     }
 
-
     /**
      * Finalize function, makes the code a bit more magic, but cleaner.
      * Basically an alias for listening to the message event.
@@ -384,12 +385,17 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    public listen(customFunc?: PreMessageFunction): Commands {
+    public listen(botType: 'normal' | 'self' | 'guildonly' = 'normal', customFunc?: PreMessageFunction): Commands {
+        const verifier = this.botVerify(botType);
+
         this.client.on('message', (discordMessage) => {
             if (customFunc) {
                 customFunc(discordMessage);
             }
-            this.message(discordMessage);
+
+            if (verifier(discordMessage)) {
+                this.message(discordMessage);
+            }
         });
 
         return this;
@@ -398,6 +404,17 @@ export default class Commands {
     /***********
      * PRIVATE *
      ***********/
+
+    private botVerify = (botType: 'normal' | 'self' | 'guildonly'): (message: Discord.Message) => boolean => {
+        switch (botType) {
+            case 'self':
+                return (message: Discord.Message) => this.client.user.id === message.author.id;
+            case 'guildonly':
+                return (message: Discord.Message) => message.channel.type === 'group';
+            default:
+                return (message: Discord.Message) => true;
+        }
+    }
 
     /**
      * Pattern Command, for regex matching commands.
@@ -533,6 +550,7 @@ export default class Commands {
             }
         }
     }
+
     /**
      * Checks if prefix is needed, valid, and that the functor is not a pattern.
      * @param chatPrefix
