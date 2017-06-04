@@ -64,14 +64,11 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="yifflesworth-the-discord-bot">Yifflesworth the Discord bot</h1>
+				<h1 id="discordjs-commands">DiscordJS-Commands</h1>
 				<p><a href="https://github.com/ellerbrock/typescript-badges/"><img src="https://badges.frapsoft.com/typescript/version/typescript-next.svg?v=101" alt="TypeScript"></a>
 					<a href="https://david-dm.org"><img src="https://david-dm.org/Navrin/yifflesworth.svg" alt="David"></a>
 				<img src="https://img.shields.io/npm/l/express.svg?style=flat-square" alt="npm"></p>
-				<p>Yifflesworth is an experimental discord bot made using Typescript and Discord.js.
-				The bot is intended as a platform to test interfacing with such things as databases, APIs and other external sources within a discord bot.</p>
-				<h2 id="commander">Commander</h2>
-				<p>The commander class was originally designed to assist a programmer with the tedious task of setting up commands for Discord.js, and eventually leveled itself to the primary target of this bot.</p>
+				<p>The commander class was originally designed to assist a programmer with the tedious task of setting up commands for Discord.js.</p>
 				<p>The syntax for the bot is as follows:</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">new</span> Commands(configJson.prefix, client)
     .use(rateLimit.protect)
@@ -94,7 +91,7 @@
     .generateHelp()
     .listen();
 </code></pre>
-				<h3 id="commands-middlware-support">Commands Middlware Support</h3>
+				<h2 id="commands-middlware-support">Commands Middlware Support</h2>
 				<p>The <code>.use</code> syntax on the class is a form of middleware, accepting a promise that returns a boolean condition. The message chain will fail, and not send if the condition returns false.</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">new</span> Commands(configJson.prefix, client)
     .use(<span class="hljs-keyword">async</span> (message, options client) =&gt; {
@@ -103,8 +100,8 @@
     });
 </code></pre>
 				<p>The middleware demonstrated above is a spam limiter, checking an auto-clearing object and rejecting a message middleware if they are above the spam limit.</p>
-				<h4 id="middlewares-included">Middlewares included</h4>
-				<h5 id="rate-limiter">Rate Limiter</h5>
+				<h3 id="middlewares-included">Middlewares included</h3>
+				<h4 id="rate-limiter">Rate Limiter</h4>
 				<p>A simple rate limiter that prevents users from flooding a bot with commands.</p>
 				<p>Syntax is as follows</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> limiter = <span class="hljs-keyword">new</span> RateLimiter([<span class="hljs-string">'messages allowed per window'</span>],
