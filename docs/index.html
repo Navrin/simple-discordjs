@@ -70,7 +70,9 @@
 				<img src="https://img.shields.io/npm/l/express.svg?style=flat-square" alt="npm"></p>
 				<p>The commander class was originally designed to assist a programmer with the tedious task of setting up commands for Discord.js.</p>
 				<p>The syntax for the bot is as follows:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">new</span> Commands(configJson.prefix, client)
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> Commands, { RateLimiter, RoleTypes, Auth } <span class="hljs-keyword">from</span> <span class="hljs-string">'discordjs-command-helper'</span>;
+
+<span class="hljs-keyword">new</span> Commands(configJson.prefix, client)
     .use(rateLimit.protect)
     .use(auth.authenticate)
     .defineCommand({
@@ -86,6 +88,7 @@
             action: pinger,
             pattern: <span class="hljs-regexp">/p[oa]ng/</span>,
         },
+        authentication: RoleTypes.ADMIN,
         description: <span class="hljs-string">'A joke reply to pong'</span>,
     })
     .generateHelp()
@@ -227,31 +230,31 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/commanddescription.html" class="tsd-kind-icon">Command<wbr>Description</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/commandlist.html" class="tsd-kind-icon">Command<wbr>List</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/commandobject.html" class="tsd-kind-icon">Command<wbr>Object</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/createuseroptions.html" class="tsd-kind-icon">Create<wbr>User<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/limiter.html" class="tsd-kind-icon">Limiter</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
-						<a href="interfaces/parameterdefinition.html" class="tsd-kind-icon">Parameterdefinition</a>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/parameterdefinition.html" class="tsd-kind-icon">Parameter<wbr>Definition</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/prefixer.html" class="tsd-kind-icon">Prefixer</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#commandfunction" class="tsd-kind-icon">Command<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#createuserfunc" class="tsd-kind-icon">Create<wbr>User<wbr>Func</a>
 					</li>
 					<li class=" tsd-kind-type-alias">

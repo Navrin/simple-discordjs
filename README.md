@@ -9,6 +9,8 @@ The commander class was originally designed to assist a programmer with the tedi
 The syntax for the bot is as follows:
 
 ```typescript
+import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
+
 new Commands(configJson.prefix, client)
     .use(rateLimit.protect)
     .use(auth.authenticate)
@@ -25,6 +27,7 @@ new Commands(configJson.prefix, client)
             action: pinger,
             pattern: /p[oa]ng/,
         },
+        authentication: RoleTypes.ADMIN,
         description: 'A joke reply to pong',
     })
     .generateHelp()

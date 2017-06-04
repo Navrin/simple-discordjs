@@ -1,2 +1,2 @@
-export { default as Commands } from './commands';
-export { Auth, RateLimiter } from './middleware';
+export { default } from './commands';
+export { Auth, RateLimiter, RoleTypes } from './middleware';

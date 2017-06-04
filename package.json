@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A helper class for managing discordjs bot commands.",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "author": "Navrin Thomas",
   "license": "MIT",
   "watch": {

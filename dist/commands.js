@@ -27,6 +27,7 @@ exports.CommandError = CommandError;
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
+ * import
  *
  * new Commands(prefix, client)
  *  .use(rateLimit.protect)
@@ -449,5 +450,5 @@ class Commands {
         }
     }
 }
-exports.Commands = Commands;
+exports.default = Commands;
 //# sourceMappingURL=commands.js.map

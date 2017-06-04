@@ -80,6 +80,7 @@ export declare class CommandError extends Error {
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
+ * import
  *
  * new Commands(prefix, client)
  *  .use(rateLimit.protect)
@@ -100,7 +101,7 @@ export declare class CommandError extends Error {
  * @class Commands
  * @export
  */
-export declare class Commands {
+export default class Commands {
     readonly defaultPrefix: Prefixer;
     private client;
     private commands;

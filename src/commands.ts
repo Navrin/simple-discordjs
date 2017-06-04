@@ -106,7 +106,8 @@ export class CommandError extends Error { };
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
- *
+ * import 
+ * 
  * new Commands(prefix, client)
  *  .use(rateLimit.protect)
  *  .use(auth.authenticate)
@@ -126,7 +127,7 @@ export class CommandError extends Error { };
  * @class Commands
  * @export
  */
-export class Commands {
+export default class Commands {
     readonly defaultPrefix: Prefixer;
     private client: Discord.Client;
     private commands: CommandList;
