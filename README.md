@@ -1,15 +1,10 @@
-# Yifflesworth the Discord bot
+# DiscordJS-Commands
 
 [![TypeScript](https://badges.frapsoft.com/typescript/version/typescript-next.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 [![David](https://david-dm.org/Navrin/yifflesworth.svg)](https://david-dm.org)
 ![npm](https://img.shields.io/npm/l/express.svg?style=flat-square)
 
-Yifflesworth is an experimental discord bot made using Typescript and Discord.js.
-The bot is intended as a platform to test interfacing with such things as databases, APIs and other external sources within a discord bot.
-
-## Commander
-
-The commander class was originally designed to assist a programmer with the tedious task of setting up commands for Discord.js, and eventually leveled itself to the primary target of this bot.
+The commander class was originally designed to assist a programmer with the tedious task of setting up commands for Discord.js.
 
 The syntax for the bot is as follows:
 
@@ -36,7 +31,7 @@ new Commands(configJson.prefix, client)
     .listen();
 ```
 
-### Commands Middlware Support
+## Commands Middlware Support
 
 The `.use` syntax on the class is a form of middleware, accepting a promise that returns a boolean condition. The message chain will fail, and not send if the condition returns false.
 
@@ -50,9 +45,9 @@ new Commands(configJson.prefix, client)
 
 The middleware demonstrated above is a spam limiter, checking an auto-clearing object and rejecting a message middleware if they are above the spam limit.
 
-#### Middlewares included
+### Middlewares included
 
-##### Rate Limiter
+#### Rate Limiter
 
 A simple rate limiter that prevents users from flooding a bot with commands.
 
