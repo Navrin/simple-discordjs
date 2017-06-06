@@ -76,9 +76,10 @@
 					halt the chain and stop the message from being sent.</p>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
-						<dd><pre><code class="lang-typescript"><span class="hljs-keyword">import</span>
+						<dd><pre><code class="lang-typescript">
+<span class="hljs-keyword">import</span> Commands, { RateLimiter, RoleTypes, Auth } <span class="hljs-keyword">from</span> <span class="hljs-string">'discordjs-command-helper'</span>;
 
-<span class="hljs-keyword">new</span> Commands(prefix, client)
+<span class="hljs-keyword">new</span> Commands(prefix, client, options)
  .use(rateLimit.protect)
  .use(auth.authenticate)
  .defineCommand(auth.getCommand())
@@ -128,12 +129,14 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="commands.html#defaultprefix" class="tsd-kind-icon">default<wbr>Prefix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="commands.html#funcs" class="tsd-kind-icon">funcs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="commands.html#middlewares" class="tsd-kind-icon">middlewares</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="commands.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="commands.html#patterns" class="tsd-kind-icon">patterns</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="commands.html#botverify" class="tsd-kind-icon">bot<wbr>Verify</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="commands.html#checkmiddleware" class="tsd-kind-icon">check<wbr>Middleware</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="commands.html#checkpatterns" class="tsd-kind-icon">check<wbr>Patterns</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="commands.html#checkprefix" class="tsd-kind-icon">check<wbr>Prefix</a></li>
@@ -157,13 +160,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Commands<span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Client</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="commands.html" class="tsd-signature-type">Commands</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Commands<span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Client</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/commandsoptions.html" class="tsd-signature-type">CommandsOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="commands.html" class="tsd-signature-type">Commands</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L136">commands.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L65">commands.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -196,6 +199,9 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/commandsoptions.html" class="tsd-signature-type">CommandsOptions</a></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="commands.html" class="tsd-signature-type">Commands</a></h4>
 						</li>
@@ -210,7 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Discord.Client</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L132">commands.ts:132</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L61">commands.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -220,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">:</span> <a href="../interfaces/commandlist.html" class="tsd-signature-type">CommandList</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L133">commands.ts:133</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L62">commands.ts:62</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -230,17 +236,17 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Prefix<span class="tsd-signature-symbol">:</span> <a href="../interfaces/prefixer.html" class="tsd-signature-type">Prefixer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L131">commands.ts:131</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L59">commands.ts:59</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="funcs" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> funcs</h3>
-					<div class="tsd-signature tsd-kind-icon">funcs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Symbol</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">funcs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Symbol</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L135">commands.ts:135</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L64">commands.ts:64</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -250,7 +256,17 @@
 					<div class="tsd-signature tsd-kind-icon">middlewares<span class="tsd-signature-symbol">:</span> <a href="../globals.html#middlewarefunction" class="tsd-signature-type">MiddlewareFunction</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L136">commands.ts:136</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L65">commands.ts:65</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="options" class="tsd-anchor"></a>
+					<h3>options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/commandsoptions.html" class="tsd-signature-type">CommandsOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L60">commands.ts:60</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -260,13 +276,59 @@
 					<div class="tsd-signature tsd-kind-icon">patterns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Symbol</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L134">commands.ts:134</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L63">commands.ts:63</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="botverify" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> bot<wbr>Verify</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">bot<wbr>Verify<span class="tsd-signature-symbol">(</span>botType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"normal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"self"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"guildonly"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L343">commands.ts:343</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>PRIVATE *</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>botType: <span class="tsd-signature-type">"normal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"self"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"guildonly"</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-siganture">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Message</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>message: <span class="tsd-signature-type">Discord.Message</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="checkmiddleware" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> check<wbr>Middleware</h3>
@@ -277,7 +339,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L439">commands.ts:439</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L391">commands.ts:391</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,13 +376,13 @@
 					<a name="checkpatterns" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> check<wbr>Patterns</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">check<wbr>Patterns<span class="tsd-signature-symbol">(</span>commands<span class="tsd-signature-symbol">: </span><a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a><span class="tsd-signature-symbol">[]</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Message</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">check<wbr>Patterns<span class="tsd-signature-symbol">(</span>commands<span class="tsd-signature-symbol">: </span><a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a><span class="tsd-signature-symbol">[]</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Message</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L525">commands.ts:525</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L477">commands.ts:477</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,7 +398,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>commands: <a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>commands: <a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
 									<h5>message: <span class="tsd-signature-type">Discord.Message</span></h5>
@@ -352,13 +414,13 @@
 					<a name="checkprefix" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> check<wbr>Prefix</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">check<wbr>Prefix<span class="tsd-signature-symbol">(</span>chatPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, commandObject<span class="tsd-signature-symbol">: </span><a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">check<wbr>Prefix<span class="tsd-signature-symbol">(</span>chatPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, commandSchema<span class="tsd-signature-symbol">: </span><a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L541">commands.ts:541</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L494">commands.ts:494</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,10 +434,10 @@
 									<h5>chatPrefix: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>commandObject: <a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a></h5>
+									<h5>commandSchema: <a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -389,7 +451,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L558">commands.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L512">commands.ts:512</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -430,7 +492,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L206">commands.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L137">commands.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -480,7 +542,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L271">commands.ts:271</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L208">commands.ts:208</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -504,13 +566,13 @@
 					<a name="getcommand" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Command</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Command<span class="tsd-signature-symbol">(</span>chatCommand<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, chatPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Message</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Command<span class="tsd-signature-symbol">(</span>chatCommand<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, chatPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Discord.Message</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L490">commands.ts:490</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L442">commands.ts:442</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -535,7 +597,7 @@
 									<h5>message: <span class="tsd-signature-type">Discord.Message</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/commandobject.html" class="tsd-signature-type">CommandObject</a><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/commandschema.html" class="tsd-signature-type">CommandSchema</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -543,13 +605,13 @@
 					<a name="listen" class="tsd-anchor"></a>
 					<h3>listen</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">listen<span class="tsd-signature-symbol">(</span>customFunc<span class="tsd-signature-symbol">?: </span><a href="../globals.html#premessagefunction" class="tsd-signature-type">PreMessageFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="commands.html" class="tsd-signature-type">Commands</a></li>
+						<li class="tsd-signature tsd-kind-icon">listen<span class="tsd-signature-symbol">(</span>botType<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">"normal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"self"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"guildonly"</span>, customFunc<span class="tsd-signature-symbol">?: </span><a href="../globals.html#premessagefunction" class="tsd-signature-type">PreMessageFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="commands.html" class="tsd-signature-type">Commands</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L387">commands.ts:387</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L323">commands.ts:323</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -565,6 +627,9 @@
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> botType: <span class="tsd-signature-type">"normal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"self"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"guildonly"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;normal&quot;</span></h5>
+								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> customFunc: <a href="../globals.html#premessagefunction" class="tsd-signature-type">PreMessageFunction</a></h5>
 								</li>
@@ -583,7 +648,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L241">commands.ts:241</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L171">commands.ts:171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -617,7 +682,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L463">commands.ts:463</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L415">commands.ts:415</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -651,7 +716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L413">commands.ts:413</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L365">commands.ts:365</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -695,7 +760,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L173">commands.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L105">commands.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -772,8 +837,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="commands.html#middlewares" class="tsd-kind-icon">middlewares</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="commands.html#options" class="tsd-kind-icon">options</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="commands.html#patterns" class="tsd-kind-icon">patterns</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="commands.html#botverify" class="tsd-kind-icon">bot<wbr>Verify</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="commands.html#checkmiddleware" class="tsd-kind-icon">check<wbr>Middleware</a>
@@ -828,7 +899,7 @@
 						<a href="user.html" class="tsd-kind-icon">User</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/commandaction.html" class="tsd-kind-icon">Command<wbr>Action</a>
+						<a href="../interfaces/commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
@@ -840,7 +911,10 @@
 						<a href="../interfaces/commandlist.html" class="tsd-kind-icon">Command<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/commandobject.html" class="tsd-kind-icon">Command<wbr>Object</a>
+						<a href="../interfaces/commandschema.html" class="tsd-kind-icon">Command<wbr>Schema</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/commandsoptions.html" class="tsd-kind-icon">Commands<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/createuseroptions.html" class="tsd-kind-icon">Create<wbr>User<wbr>Options</a>
@@ -866,8 +940,8 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#premessagefunction" class="tsd-kind-icon">Pre<wbr>Message<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#connectionmanager" class="tsd-kind-icon">connection<wbr>Manager</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#bottypes" class="tsd-kind-icon">bot<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="../globals.html#reversemustache" class="tsd-kind-icon">reverse<wbr>Mustache</a>
@@ -879,7 +953,7 @@
 						<a href="../globals.html#createuserifnone" class="tsd-kind-icon">create<wbr>User<wbr>IfNone</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="../globals.html#connectionoptions" class="tsd-kind-icon">connection<wbr>Options</a>
+						<a href="../globals.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a>
 					</li>
 				</ul>
 			</nav>
