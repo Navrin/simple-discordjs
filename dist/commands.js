@@ -8,21 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Discord = require("discord.js");
 const common_tags_1 = require("common-tags");
+const Discord = require("discord.js");
 const lodash_1 = require("lodash");
 const mustache = require("mustache");
 const escapeStringRegexp = require("escape-string-regexp");
 const reverseMustache = require('reverse-mustache');
-// type botTypes = 'normal' | 'self' | 'guildonly';
-// interface CommandsOptions {
-//     botType: botTypes;
-// }
-/** Don't catch all the errors, just the commandError ones. */
-class CommandError extends Error {
-}
-exports.CommandError = CommandError;
-;
+const commands_types_1 = require("./commands.types");
+const defaultOptions = {
+    botType: 'normal',
+    deleteCommandMessage: false,
+    deleteMessageDelay: 0,
+};
 /**
  * Command Class. Allows for easier usage and management of
  * bot commands. Usage will be as follows.
@@ -62,7 +59,7 @@ class Commands {
      * @param {discord.Client} client - discord client, used for easy reference.
      * @memberof Commands
      */
-    constructor(prefix, client) {
+    constructor(prefix, client, options) {
         /***********
          * PRIVATE *
          ***********/
@@ -73,7 +70,7 @@ class Commands {
                 case 'guildonly':
                     return (message) => message.channel.type === 'text';
                 default:
-                    return (message) => true;
+                    return (message) => message.author.id !== this.client.user.id;
             }
         };
         this.defaultPrefix = {
@@ -82,6 +79,7 @@ class Commands {
         };
         this.client = client;
         this.commands = {};
+        this.options = Object.assign({ defaultOptions }, options);
         this.patterns = new Map();
         this.funcs = new Map();
         this.middlewares = [];
@@ -139,8 +137,6 @@ class Commands {
             this.patternCommand(definition.command.pattern, definition);
             return this;
         }
-        // TODO: add more functionality to the definition paramater,
-        // roles, verification, etc.
         const commandNames = definition.command.names;
         const reference = Symbol(commandNames[0]);
         this.funcs.set(reference, {
@@ -168,26 +164,30 @@ class Commands {
      */
     message(message) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (message.author.id === this.client.user.id) {
+            const verifier = this.botVerify(this.options.botType);
+            if (!verifier(message)) {
                 return;
             }
             try {
                 const [chatPrefix, chatCommand, ...parameterArray] = this.parseRequest(message);
                 const commands = this.getCommand(chatCommand, chatPrefix, message);
-                for (const commandObject of commands) {
-                    this.checkPrefix(chatPrefix, commandObject);
+                for (const commandSchema of commands) {
+                    const prefixed = this.checkPrefix(chatPrefix, commandSchema);
                     // check if the function needs a prefix
-                    const parameters = this.createParameters(parameterArray, commandObject.definition, message);
+                    const parameters = this.createParameters(parameterArray, commandSchema.definition, message);
                     // create the named parameter object.
-                    yield this.checkMiddleware(message, commandObject.definition);
+                    yield this.checkMiddleware(message, commandSchema.definition);
                     // check the middleware's response before executing.
-                    commandObject.definition.command.action(message, commandObject.definition, parameters, this.client);
+                    commandSchema.definition.command.action(message, commandSchema.definition, parameters, this.client);
                     // rate limiting, don't try to send a million messages at once,
                     // otherwise discord will rate limit us
+                    if (this.options.deleteCommandMessage && prefixed) {
+                        message.delete(this.options.deleteMessageDelay || 0);
+                    }
                 }
             }
             catch (e) {
-                if (e instanceof CommandError) {
+                if (e instanceof commands_types_1.CommandError) {
                     return;
                 }
                 throw e;
@@ -202,7 +202,7 @@ class Commands {
         /**
          * Creates prefixed versions of the chat examples.
          * @param {CommandDescription} desc
-         * @param {CommandObject} info
+         * @param {commandSchema} info
          */
         const showPrefixed = (desc, info) => info.aliases
             .map((cmd) => {
@@ -347,7 +347,7 @@ class Commands {
             for (const ware of this.middlewares) {
                 const result = yield ware(message, definition, this.client);
                 if (!result) {
-                    reject(new CommandError('Middlware Rejection!'));
+                    reject(new commands_types_1.CommandError('Middlware Rejection!'));
                 }
             }
             resolve(true);
@@ -371,7 +371,7 @@ class Commands {
         // /(prefix)?(.+)/ message is match to this regex.
         const search = this.defaultPrefix.regex.exec(fullCommand);
         if (!search) {
-            throw new CommandError(`Message is malformed, not a correct command request.`);
+            throw new commands_types_1.CommandError(`Message is malformed, not a correct command request.`);
         }
         // ignore first full match.
         const [, chatPrefix, chatCommand] = search;
@@ -384,7 +384,7 @@ class Commands {
      * @param {string} chatCommand
      * @param {string} chatPrefix
      * @param {Discord.Message} message
-     * @returns {CommandObject}
+     * @returns {commandSchema}
      *
      * @memberof Commands
      */
@@ -402,7 +402,7 @@ class Commands {
                 message.channel.send(common_tags_1.oneLineTrim `Command not found! 
                 Consider sending ${this.defaultPrefix.str}help.`);
             }
-            throw new CommandError(`Command isn't valid.`);
+            throw new commands_types_1.CommandError(`Command isn't valid.`);
         }
         return commands;
     }
@@ -410,7 +410,7 @@ class Commands {
      * Check the patterns defined with patternCommand.
      *
      * @private
-     * @param {CommandObject[]} commands
+     * @param {commandSchema[]} commands
      * @param {Discord.Message} message
      *
      * @memberof Commands
@@ -431,11 +431,12 @@ class Commands {
      * @param chatPrefix
      * @param command
      */
-    checkPrefix(chatPrefix, commandObject) {
-        if (!chatPrefix && !commandObject.definition.command.noPrefix && !commandObject.pattern) {
+    checkPrefix(chatPrefix, commandSchema) {
+        if (!chatPrefix && !commandSchema.definition.command.noPrefix && !commandSchema.pattern) {
             // if command is valid + requires a prefix and there is no prefix for the command
-            throw new CommandError(`Function requires a prefix.`);
+            throw new commands_types_1.CommandError(`Function requires a prefix.`);
         }
+        return !(commandSchema.definition.command.noPrefix || commandSchema.pattern);
     }
     /**
      * Creates a parameter object from the user arguments.
@@ -463,8 +464,8 @@ class Commands {
         }
         catch (e) {
             message.channel.send(common_tags_1.oneLineTrim `Please format your ${templater.content || 'empty message'} 
-            to match ${(templater.template || '').replace(/({{)|(}})/, '')}`);
-            throw new CommandError('The parameters are not correct.');
+            to match ${(templater.template || 'template not defined?')}`);
+            throw new commands_types_1.CommandError('The parameters are not correct.');
         }
     }
 }
