@@ -4,9 +4,10 @@ import entities from './entities';
 import 'reflect-metadata';
 
 const connectionOptions: ConnectionOptions = {
+    name: 'commander_connection',
     driver: {
         type: 'sqlite',
-        storage: 'bot.db',
+        storage: 'commander_entities.db',
     },
     entities: [
         ...entities,

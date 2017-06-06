@@ -14,6 +14,10 @@ const lodash_1 = require("lodash");
 const mustache = require("mustache");
 const escapeStringRegexp = require("escape-string-regexp");
 const reverseMustache = require('reverse-mustache');
+// type botTypes = 'normal' | 'self' | 'guildonly';
+// interface CommandsOptions {
+//     botType: botTypes;
+// }
 /** Don't catch all the errors, just the commandError ones. */
 class CommandError extends Error {
 }
@@ -27,6 +31,7 @@ exports.CommandError = CommandError;
  * halt the chain and stop the message from being sent.
  * @example
  * ```typescript
+ *
  * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
  *
  * new Commands(prefix, client)

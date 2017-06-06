@@ -29,7 +29,7 @@ class Auth {
     superuser: string;
 
     constructor(superuser: string) {
-        this.connection = getConnectionManager().get(); // the database is essentially the 'state' anyway.
+        this.connection = getConnectionManager().get('commander_connection'); // the database is essentially the 'state' anyway.
         this.superuser = superuser;
     }
 

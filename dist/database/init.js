@@ -7,7 +7,7 @@ require("reflect-metadata");
 const connectionOptions = {
     driver: {
         type: 'sqlite',
-        storage: 'bot.db',
+        storage: 'commander_entities.db',
     },
     entities: [
         ...entities_1.default,
