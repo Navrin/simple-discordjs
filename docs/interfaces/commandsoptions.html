@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CommandAction | DiscordJS Command Helper </title>
+	<title>CommandsOptions | DiscordJS Command Helper </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="commandaction.html">CommandAction</a>
+					<a href="commandsoptions.html">CommandsOptions</a>
 				</li>
 			</ul>
-			<h1>Interface CommandAction</h1>
+			<h1>Interface CommandsOptions</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CommandAction</span>
+						<span class="target">CommandsOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -81,11 +81,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandaction.html#action" class="tsd-kind-icon">action</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandaction.html#names" class="tsd-kind-icon">names</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandaction.html#noprefix" class="tsd-kind-icon">no<wbr>Prefix</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandaction.html#parameters" class="tsd-kind-icon">parameters</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandaction.html#pattern" class="tsd-kind-icon">pattern</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandsoptions.html#bottype" class="tsd-kind-icon">bot<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandsoptions.html#deletecommandmessage" class="tsd-kind-icon">delete<wbr>Command<wbr>Message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandsoptions.html#deletemessagedelay" class="tsd-kind-icon">delete<wbr>Message<wbr>Delay</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,80 +92,75 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="action" class="tsd-anchor"></a>
-					<h3>action</h3>
-					<div class="tsd-signature tsd-kind-icon">action<span class="tsd-signature-symbol">:</span> <a href="../globals.html#commandfunction" class="tsd-signature-type">CommandFunction</a></div>
+					<a name="bottype" class="tsd-anchor"></a>
+					<h3>bot<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">bot<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../globals.html#bottypes" class="tsd-signature-type">botTypes</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L56">commands.ts:56</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="names" class="tsd-anchor"></a>
-					<h3>names</h3>
-					<div class="tsd-signature tsd-kind-icon">names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L57">commands.ts:57</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="noprefix" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Prefix</h3>
-					<div class="tsd-signature tsd-kind-icon">no<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L59">commands.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L107">commands.types.ts:107</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>if true, the message wont need a chat prefix to be called</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="parameters" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> parameters</h3>
-					<div class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L69">commands.ts:69</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The optional parameters the function will take
-							parameters: &#39;{{actionOption}} with {{value}}&#39;,</p>
-						</div>
-						<p> will result in a command parameters to equal
-						when called with !action hello with person</p>
-						<p> { array: [&#39;!action&#39;, &#39;hello&#39;, &#39;with&#39;, &#39;person&#39;],
-						named: { actionOption: &#39;hello&#39;, value: &#39;person&#39; }}</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="pattern" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pattern</h3>
-					<div class="tsd-signature tsd-kind-icon">pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L76">commands.ts:76</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Instead of seperating simpleCommand and pattern command, simply check for
-							a regex, if so, call a private patternCommand instead.</p>
+							<p>Valid bot types
+								Normal replies to all text channels, including guildonly
+								Self bot, only replies to you and only you.
+							Guildonly will only work in discord guild channels</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>type</dt>
-							<dd><p>{RegExp}</p>
+							<dd><p>{botTypes}</p>
 							</dd>
 							<dt>memberof</dt>
-							<dd><p>CommandAction</p>
+							<dd><p>CommandsOptions</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="deletecommandmessage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> delete<wbr>Command<wbr>Message</h3>
+					<div class="tsd-signature tsd-kind-icon">delete<wbr>Command<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L115">commands.types.ts:115</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If someone types a prefixed command like !action,
+							delete the message on successful reply</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{boolean}</p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>CommandsOptions</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="deletemessagedelay" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> delete<wbr>Message<wbr>Delay</h3>
+					<div class="tsd-signature tsd-kind-icon">delete<wbr>Message<wbr>Delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L123">commands.types.ts:123</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the amount of time the !action command will
+							stay in the channel until it is deleted.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{number}</p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>CommandsOptions</p>
 							</dd>
 						</dl>
 					</div>
@@ -208,30 +201,9 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/user.html" class="tsd-kind-icon">User</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="commandaction.html" class="tsd-kind-icon">Command<wbr>Action</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commandaction.html#action" class="tsd-kind-icon">action</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commandaction.html#names" class="tsd-kind-icon">names</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commandaction.html#noprefix" class="tsd-kind-icon">no<wbr>Prefix</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commandaction.html#parameters" class="tsd-kind-icon">parameters</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commandaction.html#pattern" class="tsd-kind-icon">pattern</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-interface">
+						<a href="commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
 					</li>
@@ -242,8 +214,26 @@
 						<a href="commandlist.html" class="tsd-kind-icon">Command<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="commandobject.html" class="tsd-kind-icon">Command<wbr>Object</a>
+						<a href="commandschema.html" class="tsd-kind-icon">Command<wbr>Schema</a>
 					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="commandsoptions.html" class="tsd-kind-icon">Commands<wbr>Options</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commandsoptions.html#bottype" class="tsd-kind-icon">bot<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commandsoptions.html#deletecommandmessage" class="tsd-kind-icon">delete<wbr>Command<wbr>Message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commandsoptions.html#deletemessagedelay" class="tsd-kind-icon">delete<wbr>Message<wbr>Delay</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="createuseroptions.html" class="tsd-kind-icon">Create<wbr>User<wbr>Options</a>
 					</li>
@@ -268,8 +258,8 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#premessagefunction" class="tsd-kind-icon">Pre<wbr>Message<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#connectionmanager" class="tsd-kind-icon">connection<wbr>Manager</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#bottypes" class="tsd-kind-icon">bot<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="../globals.html#reversemustache" class="tsd-kind-icon">reverse<wbr>Mustache</a>
@@ -281,7 +271,7 @@
 						<a href="../globals.html#createuserifnone" class="tsd-kind-icon">create<wbr>User<wbr>IfNone</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="../globals.html#connectionoptions" class="tsd-kind-icon">connection<wbr>Options</a>
+						<a href="../globals.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a>
 					</li>
 				</ul>
 			</nav>

@@ -11,12 +11,12 @@ The syntax for the bot is as follows:
 ```typescript
 import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
 
-new Commands(configJson.prefix, client)
+new Commands(configJson.prefix, client, options)
     .use(rateLimit.protect)
     .use(auth.authenticate)
     .defineCommand({
         command: {
-            name: ['p', 'ping'],
+            names: ['p', 'ping'],
             action: ping,
         },
         description: {
@@ -26,7 +26,7 @@ new Commands(configJson.prefix, client)
     })
     .defineCommand({
         command: {
-            name: ['pang', 'pong'],
+            names: ['pang', 'pong'],
             action: pinger,
             pattern: /p[oa]ng/,
         },
@@ -39,6 +39,59 @@ new Commands(configJson.prefix, client)
     .generateHelp()
     .listen();
 ```
+
+## Bot Config 
+
+The bot settings is a simple object that accepts this interface: 
+
+```typescript
+
+export type botTypes = 'normal' | 'self' | 'guildonly';
+
+export interface CommandsOptions {
+    /**
+     * Valid bot types
+     * Normal replies to all text channels, including guildonly
+     * Self bot, only replies to you and only you.
+     * Guildonly will only work in discord guild channels
+     *
+     * @type {botTypes}
+     * @memberof CommandsOptions
+     */
+    botType: botTypes;
+    /**
+     * If someone types a prefixed command like !action,
+     * delete the message on successful reply
+     *
+     * @type {boolean}
+     * @memberof CommandsOptions
+     */
+    deleteCommandMessage?: boolean;
+    /**
+     * Defines the amount of time the !action command will
+     * stay in the channel until it is deleted.
+     *
+     * @type {number}
+     * @memberof CommandsOptions
+     */
+    deleteMessageDelay?: number;
+}
+
+
+```
+
+### Bot Types
+
+Bots can have multiple different types, including a self type for selfbots.
+
+Type          | Description
+--------------|------------
+`'normal'`    | Standard default bot type, replies to all messages in all channels.
+`'self'`      | Selfbot, limited to only repling to its own client.id messages.
+`'guildonly'` | Limits the bot to only reply messages sent in a guild channel. Users will not be able to interact with the bot in DMs.
+
+### Auto Message Deletion
+
 
 ## Commands Middlware Support
 
@@ -196,12 +249,3 @@ The returned help function looks as follows:
 
 *Please do not remove the signature from the source code, it would be appreciated if you left that in for developers looking to use this library.*
 
-### Bot Types
-
-Bots can have multiple different types, including a self type for selfbots.
-
-Type          | Description
---------------|------------
-`'normal'`    | Standard default bot type, replies to all messages in all channels.
-`'self'`      | Selfbot, limited to only repling to its own client.id messages.
-`'guildonly'` | Limits the bot to only reply messages sent in a guild channel. Users will not be able to interact with the bot in DMs.

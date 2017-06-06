@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CommandDescription | DiscordJS Command Helper </title>
+	<title>CommandActionDescriber | DiscordJS Command Helper </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="commanddescription.html">CommandDescription</a>
+					<a href="commandactiondescriber.html">CommandActionDescriber</a>
 				</li>
 			</ul>
-			<h1>Interface CommandDescription</h1>
+			<h1>Interface CommandActionDescriber</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CommandDescription</span>
+						<span class="target">CommandActionDescriber</span>
 					</li>
 				</ul>
 			</section>
@@ -81,8 +81,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commanddescription.html#example" class="tsd-kind-icon">example</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commanddescription.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandactiondescriber.html#action" class="tsd-kind-icon">action</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandactiondescriber.html#names" class="tsd-kind-icon">names</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandactiondescriber.html#noprefix" class="tsd-kind-icon">no<wbr>Prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandactiondescriber.html#parameters" class="tsd-kind-icon">parameters</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commandactiondescriber.html#pattern" class="tsd-kind-icon">pattern</a></li>
 							</ul>
 						</section>
 					</div>
@@ -91,33 +94,82 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="example" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> example</h3>
-					<div class="tsd-signature tsd-kind-icon">example<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="action" class="tsd-anchor"></a>
+					<h3>action</h3>
+					<div class="tsd-signature tsd-kind-icon">action<span class="tsd-signature-symbol">:</span> <a href="../globals.html#commandfunction" class="tsd-signature-type">CommandFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L77">commands.types.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L50">commands.types.ts:50</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="names" class="tsd-anchor"></a>
+					<h3>names</h3>
+					<div class="tsd-signature tsd-kind-icon">names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L51">commands.types.ts:51</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="noprefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">no<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L53">commands.types.ts:53</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An example in the code block for the use of the command.</p>
+							<p>if true, the message wont need a chat prefix to be called</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="parameters" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> parameters</h3>
+					<div class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L75">commands.types.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L63">commands.types.ts:63</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The message to be shown to the user in the command description.</p>
+							<p>The optional parameters the function will take
+							parameters: &#39;{{actionOption}} with {{value}}&#39;,</p>
 						</div>
+						<p> will result in a command parameters to equal
+						when called with !action hello with person</p>
+						<p> { array: [&#39;!action&#39;, &#39;hello&#39;, &#39;with&#39;, &#39;person&#39;],
+						named: { actionOption: &#39;hello&#39;, value: &#39;person&#39; }}</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="pattern" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pattern</h3>
+					<div class="tsd-signature tsd-kind-icon">pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L70">commands.types.ts:70</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Instead of seperating simpleCommand and pattern command, simply check for
+							a regex, if so, call a private patternCommand instead.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{RegExp}</p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>CommandAction</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 			</section>
@@ -156,27 +208,36 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/user.html" class="tsd-kind-icon">User</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="commanddescription.html" class="tsd-kind-icon">Command<wbr>Description</a>
+						<a href="commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commanddescription.html#example" class="tsd-kind-icon">example</a>
+								<a href="commandactiondescriber.html#action" class="tsd-kind-icon">action</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="commanddescription.html#message" class="tsd-kind-icon">message</a>
+								<a href="commandactiondescriber.html#names" class="tsd-kind-icon">names</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commandactiondescriber.html#noprefix" class="tsd-kind-icon">no<wbr>Prefix</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commandactiondescriber.html#parameters" class="tsd-kind-icon">parameters</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commandactiondescriber.html#pattern" class="tsd-kind-icon">pattern</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="commanddescription.html" class="tsd-kind-icon">Command<wbr>Description</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="commandlist.html" class="tsd-kind-icon">Command<wbr>List</a>
 					</li>

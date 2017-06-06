@@ -36,7 +36,7 @@ const defaultOptions: CommandsOptions = {
  *
  * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
  *
- * new Commands(prefix, client)
+ * new Commands(prefix, client, options)
  *  .use(rateLimit.protect)
  *  .use(auth.authenticate)
  *  .defineCommand(auth.getCommand())

@@ -72,32 +72,97 @@
 				<p>The syntax for the bot is as follows:</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> Commands, { RateLimiter, RoleTypes, Auth } <span class="hljs-keyword">from</span> <span class="hljs-string">'discordjs-command-helper'</span>;
 
-<span class="hljs-keyword">new</span> Commands(configJson.prefix, client)
+<span class="hljs-keyword">new</span> Commands(configJson.prefix, client, options)
     .use(rateLimit.protect)
     .use(auth.authenticate)
     .defineCommand({
         command: {
-            name: [<span class="hljs-string">'p'</span>, <span class="hljs-string">'ping'</span>],
+            names: [<span class="hljs-string">'p'</span>, <span class="hljs-string">'ping'</span>],
             action: ping,
         },
-        description: <span class="hljs-string">'Replies with pong.'</span>,
+        description: {
+            message: <span class="hljs-string">'Replies with pong.'</span>,
+            example: <span class="hljs-string">'{{prefix}}ping'</span>,
+        }
     })
     .defineCommand({
         command: {
-            name: [<span class="hljs-string">'pang'</span>, <span class="hljs-string">'pong'</span>],
+            names: [<span class="hljs-string">'pang'</span>, <span class="hljs-string">'pong'</span>],
             action: pinger,
             pattern: <span class="hljs-regexp">/p[oa]ng/</span>,
         },
         authentication: RoleTypes.ADMIN,
-        description: <span class="hljs-string">'A joke reply to pong'</span>,
+        description: {
+            message: <span class="hljs-string">'A joke reply to pong'</span>,
+            example: <span class="hljs-string">'pang'</span>
+        }
     })
     .generateHelp()
     .listen();
 </code></pre>
+				<h2 id="bot-config">Bot Config</h2>
+				<p>The bot settings is a simple object that accepts this interface: </p>
+				<pre><code class="lang-typescript">
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> botTypes = <span class="hljs-string">'normal'</span> | <span class="hljs-string">'self'</span> | <span class="hljs-string">'guildonly'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> CommandsOptions {
+    <span class="hljs-comment">/**
+     * Valid bot types
+     * Normal replies to all text channels, including guildonly
+     * Self bot, only replies to you and only you.
+     * Guildonly will only work in discord guild channels
+     *
+     * @type {botTypes}
+     * @memberof CommandsOptions
+     */</span>
+    botType: botTypes;
+    <span class="hljs-comment">/**
+     * If someone types a prefixed command like !action,
+     * delete the message on successful reply
+     *
+     * @type {boolean}
+     * @memberof CommandsOptions
+     */</span>
+    deleteCommandMessage?: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/**
+     * Defines the amount of time the !action command will
+     * stay in the channel until it is deleted.
+     *
+     * @type {number}
+     * @memberof CommandsOptions
+     */</span>
+    deleteMessageDelay?: <span class="hljs-built_in">number</span>;
+}
+</code></pre>
+				<h3 id="bot-types">Bot Types</h3>
+				<p>Bots can have multiple different types, including a self type for selfbots.</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>&#39;normal&#39;</code></td>
+							<td>Standard default bot type, replies to all messages in all channels.</td>
+						</tr>
+						<tr>
+							<td><code>&#39;self&#39;</code></td>
+							<td>Selfbot, limited to only repling to its own client.id messages.</td>
+						</tr>
+						<tr>
+							<td><code>&#39;guildonly&#39;</code></td>
+							<td>Limits the bot to only reply messages sent in a guild channel. Users will not be able to interact with the bot in DMs.</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 id="auto-message-deletion">Auto Message Deletion</h3>
 				<h2 id="commands-middlware-support">Commands Middlware Support</h2>
 				<p>The <code>.use</code> syntax on the class is a form of middleware, accepting a promise that returns a boolean condition. The message chain will fail, and not send if the condition returns false.</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">new</span> Commands(configJson.prefix, client)
-    .use(<span class="hljs-keyword">async</span> (message, options client) =&gt; {
+    .use(<span class="hljs-keyword">async</span> (message, options, parameters, client) =&gt; {
         <span class="hljs-comment">// do stuff to check the message.</span>
         <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     });
@@ -109,13 +174,15 @@
 				<p>Syntax is as follows</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> limiter = <span class="hljs-keyword">new</span> RateLimiter([<span class="hljs-string">'messages allowed per window'</span>],
                                 [<span class="hljs-string">'window length in seconds'</span>])
+
+                <span class="hljs-keyword">new</span> RateLimiter(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>) <span class="hljs-comment">// 10 messages every 5 seconds</span>
 </code></pre>
 				<p>A window is the period of time the user will be allowed to send message, within the limit. After the limit is reached, the bot will not respond to any messages from the user until the window is reset. Pass to the middleware acceptor with,</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">new</span> Commander(prefix, client)
     .use(limiter.protect)
 </code></pre>
 				<h3 id="-authentication-module-"><strong>Authentication Module</strong></h3>
-				<p>The auth module exposes a middleware function and a command object for the user. It uses a SQLite database to keep tract of what roles have what permissions on a server. All the roles are set up in a enumerable with 5 properties.</p>
+				<p>The auth module exposes a middleware function and a command object for the user. It uses a SQLite database to keep track of what roles have what permissions on a server. All the roles are set up in a enumerable with 5 properties.</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">enum</span> RoleTypes {
     ALL = <span class="hljs-number">0</span>,
     MOD,
@@ -124,13 +191,16 @@
     SUPERUSER,
 };
 </code></pre>
-				<p><strong>Due to properties being simple numbers, roles have hierarchy. A superuser will have access to all commands as it is the highest number.</strong></p>
+				<p><strong>Due to properties being simple numbers, roles have hierarchy. A superuser will have access to all commands as it is the highest number.</strong> Admins will be able to use all mod and admin commands, and owners will be able to use all mod, admin and owner commands, etc.</p>
 				<p><code>Superuser</code> should be your user ID.</p>
 				<p><code>Owner</code> is automatically infered from the server owner exposed from discord.</p>
 				<p><code>Admin | Mod</code> is set via the <code>!addrole</code> command. Only server owners or the superuser may use addrole.</p>
+				<p><code>!addrole mod @roleGroup</code></p>
 				<p>Usage is as follows:</p>
 				<pre><code class="lang-typescript">
-<span class="hljs-keyword">const</span> auth = <span class="hljs-keyword">new</span> Auth(superuserToken); <span class="hljs-comment">// superuser token should be your discord user ID, you will have access to all commands.</span>
+<span class="hljs-keyword">const</span> auth = <span class="hljs-keyword">new</span> Auth(superuserToken);
+<span class="hljs-comment">// superuser token should be your discord user ID,</span>
+<span class="hljs-comment">// you will have access to all commands.</span>
 
 <span class="hljs-keyword">new</span> Commands(prefix, client)
     .use(auth.authenticate)
@@ -143,7 +213,7 @@
         command: {
             name: [<span class="hljs-string">'action'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'actionname'</span>]
             action:
-                (message: Discord.Message,
+               (message: Discord.Message,
                 options: CommandOptions,
                 parameters: ParameterOptions,
                 client: Discord.Client) =&gt; <span class="hljs-built_in">Promise</span>&lt;<span class="hljs-built_in">boolean</span>&gt;,
@@ -151,8 +221,6 @@
             noPrefix: <span class="hljs-literal">false</span>,
             <span class="hljs-comment">// a boolean that represents if the function</span>
             <span class="hljs-comment">// requres an explicit call, like .action or !action</span>
-            <span class="hljs-comment">// additional options can be found in the full documentation.</span>
-
         },
         description:  {
             message: <span class="hljs-string">'A description of the function, for the generator'</span>,
@@ -163,12 +231,26 @@
 				<p>For regex matching, pass a <code>pattern: RegExp</code> in the command object.</p>
 				<h2 id="parameter-matching">Parameter matching</h2>
 				<p>Reverse string templating is supported with the <code>parameter</code> option in the function description. Parameters are defined with <code>{{parameter}}</code>, and are passed as an object to the action. Strings must match to register, you cannot ignore parts of message, e.g. <code>&#39;action verb noun&#39; !== &#39;{{action}} ignore {{noun}}&#39;</code>. Instead, match it and add a junk name to it, e.g. <code>&#39;action verb noun&#39; === &#39;{{action}} {{ignored}} {{noun}}&#39;</code>.</p>
-				<pre><code class="lang-typescript"><span class="hljs-comment">// called with .param ADD 1 2.</span>
+				<pre><code class="lang-typescript">    <span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ParameterDefinition {
+        array: <span class="hljs-built_in">string</span>[];
+        named?: {
+            [key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span>;
+        };
+    }
+
+    <span class="hljs-comment">// called with .param ADD 1 2.</span>
     .defineCommand([<span class="hljs-string">'param'</span>], {
         command: {
-            action: <span class="hljs-function">(<span class="hljs-params">message, options, params</span>) =&gt;</span> {
-                <span class="hljs-built_in">console</span>.log(params);
-                <span class="hljs-comment">// { directive: 'ADD', num1: '1', num2: '2' }</span>
+            action: <span class="hljs-function">(<span class="hljs-params">message, options, params: ParameterDefintion</span>) =&gt;</span> {
+                <span class="hljs-built_in">console</span>.log(params)
+                <span class="hljs-comment">// {</span>
+                <span class="hljs-comment">//     array: ['add', '1', '2'],</span>
+                <span class="hljs-comment">//     named: {</span>
+                <span class="hljs-comment">//        directive: 'ADD',</span>
+                <span class="hljs-comment">//        num1: '1',</span>
+                <span class="hljs-comment">//        num2: '2'</span>
+                <span class="hljs-comment">//     }</span>
+                <span class="hljs-comment">// }</span>
             },
             parameters: <span class="hljs-string">'{{directive}} {{num1}} {{num2}}'</span>,
         }
@@ -225,7 +307,7 @@
 						<a href="classes/user.html" class="tsd-kind-icon">User</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/commandaction.html" class="tsd-kind-icon">Command<wbr>Action</a>
+						<a href="interfaces/commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
@@ -237,7 +319,10 @@
 						<a href="interfaces/commandlist.html" class="tsd-kind-icon">Command<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/commandobject.html" class="tsd-kind-icon">Command<wbr>Object</a>
+						<a href="interfaces/commandschema.html" class="tsd-kind-icon">Command<wbr>Schema</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/commandsoptions.html" class="tsd-kind-icon">Commands<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/createuseroptions.html" class="tsd-kind-icon">Create<wbr>User<wbr>Options</a>
@@ -263,8 +348,8 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#premessagefunction" class="tsd-kind-icon">Pre<wbr>Message<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#connectionmanager" class="tsd-kind-icon">connection<wbr>Manager</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#bottypes" class="tsd-kind-icon">bot<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#reversemustache" class="tsd-kind-icon">reverse<wbr>Mustache</a>
@@ -276,7 +361,7 @@
 						<a href="globals.html#createuserifnone" class="tsd-kind-icon">create<wbr>User<wbr>IfNone</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="globals.html#connectionoptions" class="tsd-kind-icon">connection<wbr>Options</a>
+						<a href="globals.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a>
 					</li>
 				</ul>
 			</nav>

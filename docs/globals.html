@@ -88,11 +88,12 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface"><a href="interfaces/commandaction.html" class="tsd-kind-icon">Command<wbr>Action</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/commanddescription.html" class="tsd-kind-icon">Command<wbr>Description</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/commandlist.html" class="tsd-kind-icon">Command<wbr>List</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/commandobject.html" class="tsd-kind-icon">Command<wbr>Object</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/commandschema.html" class="tsd-kind-icon">Command<wbr>Schema</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/commandsoptions.html" class="tsd-kind-icon">Commands<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/createuseroptions.html" class="tsd-kind-icon">Create<wbr>User<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/limiter.html" class="tsd-kind-icon">Limiter</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/parameterdefinition.html" class="tsd-kind-icon">Parameter<wbr>Definition</a></li>
@@ -106,12 +107,12 @@
 								<li class="tsd-kind-type-alias"><a href="globals.html#createuserfunc" class="tsd-kind-icon">Create<wbr>User<wbr>Func</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#middlewarefunction" class="tsd-kind-icon">Middleware<wbr>Function</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#premessagefunction" class="tsd-kind-icon">Pre<wbr>Message<wbr>Function</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#bottypes" class="tsd-kind-icon">bot<wbr>Types</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#connectionmanager" class="tsd-kind-icon">connection<wbr>Manager</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#reversemustache" class="tsd-kind-icon">reverse<wbr>Mustache</a></li>
 							</ul>
 						</section>
@@ -125,7 +126,7 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-is-not-exported"><a href="globals.html#connectionoptions" class="tsd-kind-icon">connection<wbr>Options</a></li>
+								<li class="tsd-kind-object-literal tsd-is-not-exported"><a href="globals.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a></li>
 							</ul>
 						</section>
 					</div>
@@ -139,9 +140,14 @@
 					<div class="tsd-signature tsd-kind-icon">Command<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L11">commands.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L5">commands.types.ts:5</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>send true if the command worked fine.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -179,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">Create<wbr>User<wbr>Func<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/user/actions.ts#L10">database/user/actions.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/middleware/database/user/actions.ts#L10">middleware/database/user/actions.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -216,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">Middleware<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L21">commands.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L15">commands.types.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -253,9 +259,14 @@
 					<div class="tsd-signature tsd-kind-icon">Pre<wbr>Message<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L18">commands.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L12">commands.types.ts:12</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Note this is not a middleware, it cannot shut down the message chain.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -278,26 +289,26 @@
 						</ul>
 					</div>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Variables</h2>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
-					<a name="connectionmanager" class="tsd-anchor"></a>
-					<h3>connection<wbr>Manager</h3>
-					<div class="tsd-signature tsd-kind-icon">connection<wbr>Manager<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConnectionManager</span><span class="tsd-signature-symbol"> =&nbsp;getConnectionManager()</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="bottypes" class="tsd-anchor"></a>
+					<h3>bot<wbr>Types</h3>
+					<div class="tsd-signature tsd-kind-icon">bot<wbr>Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"normal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"self"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"guildonly"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L18">database/init.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.types.ts#L95">commands.types.ts:95</a></li>
 						</ul>
 					</aside>
 				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
 					<a name="reversemustache" class="tsd-anchor"></a>
 					<h3>reverse<wbr>Mustache</h3>
 					<div class="tsd-signature tsd-kind-icon">reverse<wbr>Mustache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;reverse-mustache&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/commands.ts#L8">commands.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L6">commands.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -314,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/guild/actions.ts#L5">database/guild/actions.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/middleware/database/guild/actions.ts#L5">middleware/database/guild/actions.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -337,7 +348,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/user/actions.ts#L15">database/user/actions.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/middleware/database/user/actions.ts#L15">middleware/database/user/actions.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -360,63 +371,43 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Object literals</h2>
 				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-is-not-exported">
-					<a name="connectionoptions" class="tsd-anchor"></a>
-					<h3>connection<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">connection<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<a name="defaultoptions" class="tsd-anchor"></a>
+					<h3>default<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">default<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L6">database/init.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L22">commands.ts:22</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="connectionoptions.autoschemasync" class="tsd-anchor"></a>
-						<h3>auto<wbr>Schema<wbr>Sync</h3>
-						<div class="tsd-signature tsd-kind-icon">auto<wbr>Schema<wbr>Sync<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
+						<a name="defaultoptions.bottype" class="tsd-anchor"></a>
+						<h3>bot<wbr>Type</h3>
+						<div class="tsd-signature tsd-kind-icon">bot<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;normal&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L14">database/init.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L23">commands.ts:23</a></li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="connectionoptions.entities" class="tsd-anchor"></a>
-						<h3>entities</h3>
-						<div class="tsd-signature tsd-kind-icon">entities<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><a href="classes/guild.html" class="tsd-signature-type">Guild</a><span class="tsd-signature-symbol"> | </span><a href="classes/role.html" class="tsd-signature-type">Role</a><span class="tsd-signature-symbol"> | </span><a href="classes/user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[...entities,]</span></div>
+						<a name="defaultoptions.deletecommandmessage" class="tsd-anchor"></a>
+						<h3>delete<wbr>Command<wbr>Message</h3>
+						<div class="tsd-signature tsd-kind-icon">delete<wbr>Command<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L11">database/init.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L24">commands.ts:24</a></li>
 							</ul>
 						</aside>
 					</section>
-					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="connectionoptions.driver" class="tsd-anchor"></a>
-						<h3>driver</h3>
-						<div class="tsd-signature tsd-kind-icon">driver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="defaultoptions.deletemessagedelay" class="tsd-anchor"></a>
+						<h3>delete<wbr>Message<wbr>Delay</h3>
+						<div class="tsd-signature tsd-kind-icon">delete<wbr>Message<wbr>Delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L7">database/init.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/a9a9979/src/commands.ts#L25">commands.ts:25</a></li>
 							</ul>
 						</aside>
-						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-							<a name="connectionoptions.driver.storage" class="tsd-anchor"></a>
-							<h3>storage</h3>
-							<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;bot.db&quot;</span></div>
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L9">database/init.ts:9</a></li>
-								</ul>
-							</aside>
-						</section>
-						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-							<a name="connectionoptions.driver.type" class="tsd-anchor"></a>
-							<h3>type</h3>
-							<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;sqlite&quot;</span></div>
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/Navrin/discordjs-commands/blob/d0d81af/src/database/init.ts#L8">database/init.ts:8</a></li>
-								</ul>
-							</aside>
-						</section>
 					</section>
 				</section>
 			</section>
@@ -456,7 +447,7 @@
 						<a href="classes/user.html" class="tsd-kind-icon">User</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/commandaction.html" class="tsd-kind-icon">Command<wbr>Action</a>
+						<a href="interfaces/commandactiondescriber.html" class="tsd-kind-icon">Command<wbr>Action<wbr>Describer</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/commanddefinition.html" class="tsd-kind-icon">Command<wbr>Definition</a>
@@ -468,7 +459,10 @@
 						<a href="interfaces/commandlist.html" class="tsd-kind-icon">Command<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/commandobject.html" class="tsd-kind-icon">Command<wbr>Object</a>
+						<a href="interfaces/commandschema.html" class="tsd-kind-icon">Command<wbr>Schema</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/commandsoptions.html" class="tsd-kind-icon">Commands<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/createuseroptions.html" class="tsd-kind-icon">Create<wbr>User<wbr>Options</a>
@@ -494,8 +488,8 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#premessagefunction" class="tsd-kind-icon">Pre<wbr>Message<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#connectionmanager" class="tsd-kind-icon">connection<wbr>Manager</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#bottypes" class="tsd-kind-icon">bot<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#reversemustache" class="tsd-kind-icon">reverse<wbr>Mustache</a>
@@ -507,7 +501,7 @@
 						<a href="globals.html#createuserifnone" class="tsd-kind-icon">create<wbr>User<wbr>IfNone</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="globals.html#connectionoptions" class="tsd-kind-icon">connection<wbr>Options</a>
+						<a href="globals.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a>
 					</li>
 				</ul>
 			</nav>
