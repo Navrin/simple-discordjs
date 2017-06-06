@@ -1,4 +1,3 @@
-import './database/init';
 export { default } from './commands';
 export { MiddlewareFunction, CommandFunction, CommandDefinition } from './commands';
 export * from './commands';

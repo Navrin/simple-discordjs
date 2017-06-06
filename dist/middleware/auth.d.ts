@@ -1,4 +1,4 @@
-import { Connection } from 'typeorm';
+import { ConnectionManager, ConnectionOptions } from 'typeorm';
 import { MiddlewareFunction, CommandDefinition } from '../commands';
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
@@ -18,8 +18,9 @@ declare enum RoleTypes {
  * @class Auth
  */
 declare class Auth {
-    connection: Connection;
+    connection: ConnectionManager;
     superuser: string;
+    connectionSettings: ConnectionOptions;
     constructor(superuser: string);
     /**
      * Authenticate the user, finding their highest role and checking

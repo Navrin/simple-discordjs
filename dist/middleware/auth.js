@@ -8,10 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const model_1 = require("./../database/role/model");
-const actions_1 = require("./../database/guild/actions");
-const model_2 = require("./../database/guild/model");
+const model_1 = require("./database/role/model");
+const actions_1 = require("./database/guild/actions");
+const model_2 = require("./database/guild/model");
 const typeorm_1 = require("typeorm");
+const entities_1 = require("./database/entities");
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
  * For non role'd commands / all user commands use 0 to check for falsey.
@@ -55,7 +56,7 @@ class Auth {
             const userGuildMember = message.guild.member(message.author);
             const userGuildRoles = Array.from(userGuildMember.roles.values());
             const userRoleIds = userGuildRoles.map(role => parseInt(role.id, 10));
-            const roleRepo = yield this.connection.getRepository(model_1.Role);
+            const roleRepo = yield typeorm_1.getRepository(model_1.Role, 'commander_connection');
             const roleRecords = yield roleRepo
                 .createQueryBuilder('role')
                 .where('role.guild = :guild', { guild: message.guild.id })
@@ -101,15 +102,15 @@ class Auth {
                 return false;
             }
             // wot in tarnation?
-            // you generally can't access enumerables with enum[key], so instead
-            // cast it to any, and access it that way. very hacky.
+            // sadly, typescript doesn't let you access an enumerable via the enum[key] way.
+            // adding [key: string]: number will incur a compile error. so, any hacks!
             const enumType = RoleTypes[type.toUpperCase()];
             if (!enumType) {
                 message.channel.send(`Role ${type} was not found. Check .h for the role names.`);
                 return false;
             }
-            const roleRepo = yield this.connection.getRepository(model_1.Role);
-            const guildRepo = yield this.connection.getRepository(model_2.Guild);
+            const roleRepo = yield typeorm_1.getRepository(model_1.Role, 'commander_connection');
+            const guildRepo = yield typeorm_1.getRepository(model_2.Guild, 'commander_connection');
             const guild = (yield guildRepo.findOneById(parseInt(message.guild.id, 10)))
                 || (yield actions_1.createGuildIfNone(message));
             for (const [, role] of roles) {
@@ -122,7 +123,16 @@ class Auth {
             message.channel.send(`Roles have been added to the command permissions!`);
             return true;
         });
-        this.connection = typeorm_1.getConnectionManager().get(); // the database is essentially the 'state' anyway.
+        this.connectionSettings = {
+            name: 'commander_connection',
+            driver: {
+                type: 'sqlite',
+                storage: 'commander_entities.db',
+            },
+            entities: entities_1.default,
+        };
+        typeorm_1.createConnection(this.connectionSettings);
+        // the database is essentially the 'state' anyway.
         this.superuser = superuser;
     }
     /**

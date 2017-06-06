@@ -1,8 +1,9 @@
-import { Role } from './../database/role/model';
-import { createGuildIfNone } from './../database/guild/actions';
-import { Guild } from './../database/guild/model';
-import { getConnectionManager, Connection } from 'typeorm';
+import { Role } from './database/role/model';
+import { createGuildIfNone } from './database/guild/actions';
+import { Guild } from './database/guild/model';
+import { ConnectionManager, ConnectionOptions, createConnection, getRepository } from 'typeorm';
 import { MiddlewareFunction, CommandFunction, CommandDefinition } from '../commands';
+import entities from './database/entities';
 import * as Discord from 'discord.js';
 
 /**
@@ -21,15 +22,25 @@ enum RoleTypes {
 
 /**
  * Auth helper! Uses a enumerable with different roles. If a role is higher or equal to the needed role, then allow the message.
- * 
+ *
  * @class Auth
  */
 class Auth {
-    connection: Connection;
+    connection: ConnectionManager;
     superuser: string;
+    connectionSettings: ConnectionOptions;
 
     constructor(superuser: string) {
-        this.connection = getConnectionManager().get('commander_connection'); // the database is essentially the 'state' anyway.
+        this.connectionSettings = {
+            name: 'commander_connection',
+            driver: {
+                type: 'sqlite',
+                storage: 'commander_entities.db',
+            },
+            entities,
+        };
+        createConnection(this.connectionSettings);
+         // the database is essentially the 'state' anyway.
         this.superuser = superuser;
     }
 
@@ -57,7 +68,7 @@ class Auth {
         const userGuildRoles = Array.from(userGuildMember.roles.values());
         const userRoleIds = userGuildRoles.map(role => parseInt(role.id, 10));
 
-        const roleRepo = await this.connection.getRepository(Role);
+        const roleRepo = await getRepository(Role, 'commander_connection');
         const roleRecords = await roleRepo
             .createQueryBuilder('role')
             .where('role.guild = :guild', { guild: message.guild.id })
@@ -98,7 +109,7 @@ class Auth {
     }
     /**
      * The command that will passed to the command.action.
-     * 
+     *
      * @private
      * @type {CommandFunction}
      * @memberof Auth
@@ -159,16 +170,16 @@ class Auth {
         }
 
         // wot in tarnation?
-        // you generally can't access enumerables with enum[key], so instead
-        // cast it to any, and access it that way. very hacky.
-        const enumType: number | undefined = (<any>RoleTypes)[type.toUpperCase()];
+        // sadly, typescript doesn't let you access an enumerable via the enum[key] way.
+        // adding [key: string]: number will incur a compile error. so, any hacks!
+        const enumType: number | undefined = (RoleTypes as any)[type.toUpperCase()];
         if (!enumType) {
             message.channel.send(`Role ${type} was not found. Check .h for the role names.`);
             return false;
         }
 
-        const roleRepo = await this.connection.getRepository(Role);
-        const guildRepo = await this.connection.getRepository(Guild);
+        const roleRepo = await getRepository(Role, 'commander_connection');
+        const guildRepo = await getRepository(Guild, 'commander_connection');
         const guild = await guildRepo.findOneById(parseInt(message.guild.id, 10))
             || await createGuildIfNone(message);
 

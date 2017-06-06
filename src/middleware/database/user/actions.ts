@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import { User } from './model';
-import { Connection } from 'typeorm';
+import { Connection, getRepository } from 'typeorm';
 
 export interface CreateUserOptions {
     createdFromBark?: boolean;
@@ -19,7 +19,7 @@ const createUserIfNone: CreateUserFunc =
         options = {}
     ) => {
         try {
-            const userRepo = await connection.getRepository(User);
+            const userRepo = await getRepository(User, 'commander_connection');
 
             const user = new User();
             user.id = parseInt(discordUser.id, 10);
