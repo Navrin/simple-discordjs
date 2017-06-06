@@ -2,7 +2,7 @@ import { Role } from './database/role/model';
 import { createGuildIfNone } from './database/guild/actions';
 import { Guild } from './database/guild/model';
 import { ConnectionManager, ConnectionOptions, createConnection, getRepository } from 'typeorm';
-import { MiddlewareFunction, CommandFunction, CommandDefinition } from '../commands';
+import { MiddlewareFunction, CommandFunction, CommandDefinition } from '../commands.types';
 import entities from './database/entities';
 import * as Discord from 'discord.js';
 

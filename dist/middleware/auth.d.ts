@@ -1,5 +1,5 @@
 import { ConnectionManager, ConnectionOptions } from 'typeorm';
-import { MiddlewareFunction, CommandDefinition } from '../commands';
+import { MiddlewareFunction, CommandDefinition } from '../commands.types';
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
  * For non role'd commands / all user commands use 0 to check for falsey.

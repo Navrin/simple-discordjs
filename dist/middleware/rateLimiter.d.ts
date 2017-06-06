@@ -1,4 +1,4 @@
-import { MiddlewareFunction } from '../commands';
+import { MiddlewareFunction } from '../commands.types';
 /**
  * @param {string} boolean - if true, don't listen to commands
  */
