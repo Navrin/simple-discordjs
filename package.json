@@ -1,6 +1,6 @@
 {
   "name": "discordjs-commands",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A helper class for managing discordjs bot commands.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,7 +29,8 @@
     "reverse-mustache": "^1.8.0",
     "sqlite3": "^3.1.8",
     "string-template": "^1.0.0",
-    "typeorm": "^0.0.11"
+    "typeorm": "^0.0.11",
+    "common-tags": "^1.4.0"
   },
   "devDependencies": {
     "express": "^4.15.2",
@@ -45,7 +46,6 @@
     "@types/sqlite3": "^2.2.33",
     "@types/string-template": "^1.0.2",
     "@types/table": "^4.0.2",
-    "common-tags": "^1.4.0",
     "npm-watch": "^0.1.9",
     "tsc-watch": "^1.0.5",
     "tslint-config-airbnb": "^1.1.1",
