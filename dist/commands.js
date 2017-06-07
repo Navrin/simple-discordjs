@@ -29,9 +29,9 @@ const defaultOptions = {
  * @example
  * ```typescript
  *
- * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
+ * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper'
  *
- * new Commands(prefix, client)
+ * new Commands(prefix, client, options)
  *  .use(rateLimit.protect)
  *  .use(auth.authenticate)
  *  .defineCommand(auth.getCommand())
@@ -295,15 +295,12 @@ class Commands {
      *
      * @memberof Commands
      */
-    listen(botType = 'normal', customFunc) {
-        const verifier = this.botVerify(botType);
+    listen(customFunc) {
         this.client.on('message', (discordMessage) => {
             if (customFunc) {
                 customFunc(discordMessage);
             }
-            if (verifier(discordMessage)) {
-                this.message(discordMessage);
-            }
+            this.message(discordMessage);
         });
         return this;
     }

@@ -40,9 +40,9 @@ new Commands(configJson.prefix, client, options)
     .listen();
 ```
 
-## Bot Config 
+## Bot Config
 
-The bot settings is a simple object that accepts this interface: 
+The bot settings is a simple object that accepts this interface:
 
 ```typescript
 
@@ -92,6 +92,7 @@ Type          | Description
 
 ### Auto Message Deletion
 
+Setting `deleteCommandMessage` allows for !action messages to be automatically deleted when they trigger a bot commnand. This helps remove some of the spam of !action commands, but only works when the bot is triggered explicitly. Pattern commands will not be deleted.
 
 ## Commands Middlware Support
 
@@ -248,4 +249,3 @@ The returned help function looks as follows:
 ![helper](https://i.imgur.com/wBOdcK6.png)
 
 *Please do not remove the signature from the source code, it would be appreciated if you left that in for developers looking to use this library.*
-

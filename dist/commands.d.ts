@@ -9,9 +9,9 @@ import { PreMessageFunction, MiddlewareFunction, CommandDefinition, Prefixer, Co
  * @example
  * ```typescript
  *
- * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
+ * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper'
  *
- * new Commands(prefix, client)
+ * new Commands(prefix, client, options)
  *  .use(rateLimit.protect)
  *  .use(auth.authenticate)
  *  .defineCommand(auth.getCommand())
@@ -116,7 +116,7 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    listen(botType?: 'normal' | 'self' | 'guildonly', customFunc?: PreMessageFunction): Commands;
+    listen(customFunc?: PreMessageFunction): Commands;
     /***********
      * PRIVATE *
      ***********/

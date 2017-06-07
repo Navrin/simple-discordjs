@@ -16,6 +16,7 @@ import {
     Prefixer,
     CommandsOptions,
     CommandError,
+    botTypes,
 } from './commands.types';
 
 
@@ -34,7 +35,7 @@ const defaultOptions: CommandsOptions = {
  * @example
  * ```typescript
  *
- * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
+ * import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper'
  *
  * new Commands(prefix, client, options)
  *  .use(rateLimit.protect)
@@ -320,17 +321,13 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    public listen(botType: 'normal' | 'self' | 'guildonly' = 'normal', customFunc?: PreMessageFunction): Commands {
-        const verifier = this.botVerify(botType);
-
+    public listen(customFunc?: PreMessageFunction): Commands {
         this.client.on('message', (discordMessage) => {
             if (customFunc) {
                 customFunc(discordMessage);
             }
 
-            if (verifier(discordMessage)) {
-                this.message(discordMessage);
-            }
+            this.message(discordMessage);
         });
 
         return this;
@@ -340,7 +337,7 @@ export default class Commands {
      * PRIVATE *
      ***********/
 
-    private botVerify = (botType: 'normal' | 'self' | 'guildonly'): (message: Discord.Message) => boolean => {
+    private botVerify = (botType: botTypes): (message: Discord.Message) => boolean => {
         switch (botType) {
             case 'self':
                 return (message: Discord.Message) => this.client.user.id === message.author.id;
