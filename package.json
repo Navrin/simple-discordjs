@@ -22,6 +22,17 @@
     "docs:serve": "yarn run docs & ts-node ./docserver.ts"
   },
   "dependencies": {
+    "discord.js": "^11.1.0",
+    "lodash": "^4.17.4",
+    "mustache": "^2.3.0",
+    "reflect-metadata": "^0.1.10",
+    "reverse-mustache": "^1.8.0",
+    "sqlite3": "^3.1.8",
+    "string-template": "^1.0.0",
+    "typeorm": "^0.0.11"
+  },
+  "devDependencies": {
+    "express": "^4.15.2",
     "@types/cheerio": "^0.22.1",
     "@types/common-tags": "^1.2.5",
     "@types/escape-string-regexp": "^0.0.30",
@@ -35,23 +46,12 @@
     "@types/string-template": "^1.0.2",
     "@types/table": "^4.0.2",
     "common-tags": "^1.4.0",
-    "discord.js": "^11.1.0",
-    "express": "^4.15.2",
-    "lodash": "^4.17.4",
-    "mustache": "^2.3.0",
-    "reflect-metadata": "^0.1.10",
-    "reverse-mustache": "^1.8.0",
-    "sqlite3": "^3.1.8",
-    "string-template": "^1.0.0",
-    "ts-node": "^3.0.4",
-    "typeorm": "^0.0.11",
-    "typescript": "^2.3.3"
-  },
-  "devDependencies": {
     "npm-watch": "^0.1.9",
     "tsc-watch": "^1.0.5",
     "tslint-config-airbnb": "^1.1.1",
     "tslint-eslint-rules": "^4.1.0",
-    "typedoc": "^0.7.0"
+    "typedoc": "^0.7.0",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.3"
   }
 }
