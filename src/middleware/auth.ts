@@ -39,7 +39,9 @@ class Auth {
             },
             entities,
         };
-        createConnection(this.connectionSettings);
+
+        const connection = createConnection(this.connectionSettings);
+        connection.then(onConnect => onConnect.syncSchema());
          // the database is essentially the 'state' anyway.
         this.superuser = superuser;
     }

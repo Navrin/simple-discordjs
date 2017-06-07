@@ -1,6 +1,6 @@
 {
   "name": "discordjs-commands",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A helper class for managing discordjs bot commands.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

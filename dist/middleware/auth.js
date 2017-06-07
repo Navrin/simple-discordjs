@@ -131,7 +131,8 @@ class Auth {
             },
             entities: entities_1.default,
         };
-        typeorm_1.createConnection(this.connectionSettings);
+        const connection = typeorm_1.createConnection(this.connectionSettings);
+        connection.then(onConnect => onConnect.syncSchema());
         // the database is essentially the 'state' anyway.
         this.superuser = superuser;
     }
