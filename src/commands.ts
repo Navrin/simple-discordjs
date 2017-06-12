@@ -523,7 +523,7 @@ export default class Commands {
             };
         } catch (e) {
             message.channel.send(
-            oneLineTrim`Please format your ${templater.content || 'empty message'} 
+                oneLineTrim`Please format your ${templater.content || 'empty message'} 
             to match ${(templater.template || 'template not defined?')}`);
             throw new CommandError('The parameters are not correct.');
         }

@@ -1,4 +1,4 @@
-# DiscordJS-Commands
+# Simple DiscordJS
 
 [![TypeScript](https://badges.frapsoft.com/typescript/version/typescript-next.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 [![David](https://david-dm.org/Navrin/yifflesworth.svg)](https://david-dm.org)
@@ -9,7 +9,7 @@ The commander class was originally designed to assist a programmer with the tedi
 The syntax for the bot is as follows:
 
 ```typescript
-import Commands, { RateLimiter, RoleTypes, Auth } from 'discordjs-command-helper';
+import Commands, { RateLimiter, RoleTypes, Auth } from 'simple-discordjs';
 
 new Commands(configJson.prefix, client, options)
     .use(rateLimit.protect)
@@ -126,7 +126,7 @@ const limiter = new RateLimiter(['messages allowed per window'],
 A window is the period of time the user will be allowed to send message, within the limit. After the limit is reached, the bot will not respond to any messages from the user until the window is reset. Pass to the middleware acceptor with,
 
 ```typescript
-new Commander(prefix, client)
+new Commands(prefix, client)
     .use(limiter.protect)
 ```
 
