@@ -6,7 +6,8 @@ export type CommandFunction =
     (message: Discord.Message,
         definition: CommandDefinition,
         parameters: ParameterDefinition,
-        client: Discord.Client) => Promise<boolean>;
+        client: Discord.Client,
+        ...params: any[]) => Promise<boolean>;
 
 /** Note this is not a middleware, it cannot shut down the message chain. */
 export type PreMessageFunction =
