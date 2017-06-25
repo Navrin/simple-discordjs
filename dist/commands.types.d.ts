@@ -1,7 +1,7 @@
 import { RoleTypes } from './middleware/auth';
 import * as Discord from 'discord.js';
 /** send true if the command worked fine. */
-export declare type CommandFunction = (message: Discord.Message, definition: CommandDefinition, parameters: ParameterDefinition, client: Discord.Client) => Promise<boolean>;
+export declare type CommandFunction = (message: Discord.Message, definition: CommandDefinition, parameters: ParameterDefinition, client: Discord.Client, ...params: any[]) => Promise<boolean>;
 /** Note this is not a middleware, it cannot shut down the message chain. */
 export declare type PreMessageFunction = (message: Discord.Message) => Promise<void>;
 export declare type MiddlewareFunction = (message: Discord.Message, definition: CommandDefinition, client: Discord.Client) => Promise<boolean>;
