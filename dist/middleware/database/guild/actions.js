@@ -13,7 +13,7 @@ const model_1 = require("./model");
 exports.createGuildIfNone = (message) => __awaiter(this, void 0, void 0, function* () {
     const guildRepo = yield typeorm_1.getRepository(model_1.Guild, 'commander_connection');
     const guild = new model_1.Guild();
-    guild.id = parseInt(message.guild.id, 10);
+    guild.id = message.guild.id;
     yield guildRepo.persist(guild);
     message.channel.send(`${message.guild.name} has been added to the database`);
     return guild;

@@ -14,7 +14,7 @@ const createUserIfNone = (discordUser, connection, options = {}) => __awaiter(th
     try {
         const userRepo = yield typeorm_1.getRepository(model_1.User, 'commander_connection');
         const user = new model_1.User();
-        user.id = parseInt(discordUser.id, 10);
+        user.id = discordUser.id;
         user.name = discordUser.username;
         yield userRepo.persist(user);
         return true;

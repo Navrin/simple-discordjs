@@ -55,7 +55,7 @@ class Auth {
             // user* are Discord.js results for the user.
             const userGuildMember = message.guild.member(message.author);
             const userGuildRoles = Array.from(userGuildMember.roles.values());
-            const userRoleIds = userGuildRoles.map(role => parseInt(role.id, 10));
+            const userRoleIds = userGuildRoles.map(role => role.id);
             const roleRepo = yield typeorm_1.getRepository(model_1.Role, 'commander_connection');
             const roleRecords = yield roleRepo
                 .createQueryBuilder('role')
@@ -111,11 +111,11 @@ class Auth {
             }
             const roleRepo = yield typeorm_1.getRepository(model_1.Role, 'commander_connection');
             const guildRepo = yield typeorm_1.getRepository(model_2.Guild, 'commander_connection');
-            const guild = (yield guildRepo.findOneById(parseInt(message.guild.id, 10)))
+            const guild = (yield guildRepo.findOneById(message.guild.id))
                 || (yield actions_1.createGuildIfNone(message));
             for (const [, role] of roles) {
                 const roleRecord = new model_1.Role();
-                roleRecord.id = parseInt(role.id, 10);
+                roleRecord.id = role.id;
                 roleRecord.guild = guild;
                 roleRecord.type = enumType;
                 roleRepo.persist(roleRecord);

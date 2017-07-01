@@ -22,7 +22,7 @@ const createUserIfNone: CreateUserFunc =
             const userRepo = await getRepository(User, 'commander_connection');
 
             const user = new User();
-            user.id = parseInt(discordUser.id, 10);
+            user.id = discordUser.id;
             user.name = discordUser.username;
 
             await userRepo.persist(user);

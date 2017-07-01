@@ -5,7 +5,7 @@ import 'reflect-metadata';
 @Entity()
 export class Role {
     @PrimaryColumn()
-    id: number;
+    id: string;
 
     @Column()
     type: number;

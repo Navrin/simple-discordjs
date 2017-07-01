@@ -20,7 +20,7 @@ let Guild = class Guild {
 };
 __decorate([
     typeorm_1.PrimaryColumn(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Guild.prototype, "id", void 0);
 __decorate([
     typeorm_1.OneToMany(type => model_2.Role, role => role.guild),

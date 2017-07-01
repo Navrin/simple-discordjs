@@ -6,7 +6,7 @@ import 'reflect-metadata';
 @Entity()
 export class Guild {
     @PrimaryColumn()
-    id: number;
+    id: string;
 
     @OneToMany(type => Role, role => role.guild)
     roles: Role[];

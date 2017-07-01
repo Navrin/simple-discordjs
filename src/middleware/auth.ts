@@ -66,7 +66,7 @@ class Auth {
         // user* are Discord.js results for the user.
         const userGuildMember = message.guild.member(message.author);
         const userGuildRoles = Array.from(userGuildMember.roles.values());
-        const userRoleIds = userGuildRoles.map(role => parseInt(role.id, 10));
+        const userRoleIds = userGuildRoles.map(role => role.id);
 
         const roleRepo = await getRepository(Role, 'commander_connection');
         const roleRecords = await roleRepo
@@ -180,12 +180,12 @@ class Auth {
 
         const roleRepo = await getRepository(Role, 'commander_connection');
         const guildRepo = await getRepository(Guild, 'commander_connection');
-        const guild = await guildRepo.findOneById(parseInt(message.guild.id, 10))
+        const guild = await guildRepo.findOneById(message.guild.id)
             || await createGuildIfNone(message);
 
         for (const [, role] of roles) {
             const roleRecord = new Role();
-            roleRecord.id = parseInt(role.id, 10);
+            roleRecord.id = role.id;
             roleRecord.guild = guild;
             roleRecord.type = enumType;
             roleRepo.persist(roleRecord);
