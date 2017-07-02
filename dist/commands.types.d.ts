@@ -1,7 +1,8 @@
 import { RoleTypes } from './middleware/auth';
 import * as Discord from 'discord.js';
+import Commands from './commands';
 /** send true if the command worked fine. */
-export declare type CommandFunction = (message: Discord.Message, definition: CommandDefinition, parameters: ParameterDefinition, client: Discord.Client, ...params: any[]) => Promise<boolean>;
+export declare type CommandFunction = (message: Discord.Message, definition: CommandDefinition, parameters: ParameterDefinition, client: Discord.Client, self: Commands, ...params: any[]) => Promise<boolean | void>;
 /** Note this is not a middleware, it cannot shut down the message chain. */
 export declare type PreMessageFunction = (message: Discord.Message) => Promise<void>;
 export declare type MiddlewareFunction = (message: Discord.Message, definition: CommandDefinition, client: Discord.Client) => Promise<boolean>;
@@ -61,11 +62,11 @@ export interface CommandDescription {
     /** An example in the code block for the use of the command. */
     example?: string;
 }
-export interface ParameterDefinition {
+export interface ParameterDefinition<P = {
+    [key: string]: any;
+}> {
     array: string[];
-    named?: {
-        [key: string]: string;
-    };
+    named?: P;
 }
 export interface Prefixer {
     str: string;

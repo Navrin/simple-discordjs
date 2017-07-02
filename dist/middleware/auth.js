@@ -34,7 +34,7 @@ exports.RoleTypes = RoleTypes;
  * @class Auth
  */
 class Auth {
-    constructor(superuser) {
+    constructor(superuser, options = {}) {
         /**
          * Authenticate the user, finding their highest role and checking
          * it against the requirement for the command.
@@ -66,7 +66,13 @@ class Auth {
             if (roleRecords > 0) {
                 return true;
             }
-            message.channel.send(`🚫 You're not allowed to use this command.`);
+            const msg = yield message.channel.send(`🚫 You're not allowed to use this command.`);
+            if (this.options.deleteMessages) {
+                (Array.isArray(msg))
+                    ? msg[0].delete(this.options.deleteMessageDelay)
+                    : msg.delete(this.options.deleteMessageDelay);
+                message.delete(this.options.deleteMessageDelay);
+            }
             return false;
         });
         /**
@@ -131,6 +137,7 @@ class Auth {
             },
             entities: entities_1.default,
         };
+        this.options = Object.assign({ deleteMessages: false, deleteMessageDelay: 0 }, options);
         typeorm_1.createConnection(this.connectionSettings);
         // the database is essentially the 'state' anyway.
         this.superuser = superuser;
@@ -146,7 +153,7 @@ class Auth {
     getCommand() {
         const command = {
             command: {
-                names: ['addrole', 'role'],
+                names: ['addrole', 'role', 'setrole'],
                 action: this.addRoleCommand,
                 parameters: '{{type}} {{mentions}}',
             },

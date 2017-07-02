@@ -20,6 +20,18 @@ enum RoleTypes {
 };
 
 
+export interface AuthOptions {
+    /**
+     * Automatically delete commands that are denied after a set time.
+     *
+     * @type {boolean}
+     * @memberof AuthOptions
+     */
+    deleteMessages?: boolean;
+
+    deleteMessageDelay?: number;
+}
+
 /**
  * Auth helper! Uses a enumerable with different roles. If a role is higher or equal to the needed role, then allow the message.
  *
@@ -29,8 +41,9 @@ class Auth {
     connection: ConnectionManager;
     superuser: string;
     connectionSettings: ConnectionOptions;
+    options: AuthOptions;
 
-    constructor(superuser: string) {
+    constructor(superuser: string, options: AuthOptions = {}) {
         this.connectionSettings = {
             name: 'commander_connection',
             driver: {
@@ -39,6 +52,12 @@ class Auth {
             },
             entities,
         };
+        this.options = {
+            deleteMessages: false,
+            deleteMessageDelay: 0,
+            ...options,
+        };
+
         createConnection(this.connectionSettings);
          // the database is essentially the 'state' anyway.
         this.superuser = superuser;
@@ -80,7 +99,14 @@ class Auth {
             return true;
         }
 
-        message.channel.send(`🚫 You're not allowed to use this command.`);
+        const msg = await message.channel.send(`🚫 You're not allowed to use this command.`);
+        if (this.options.deleteMessages) {
+            (Array.isArray(msg))
+                ? msg[0].delete(this.options.deleteMessageDelay)
+                : msg.delete(this.options.deleteMessageDelay);
+
+            message.delete(this.options.deleteMessageDelay);
+        }
         return false;
     }
 
@@ -95,7 +121,7 @@ class Auth {
     public getCommand(this: Auth) {
         const command: CommandDefinition = {
             command: {
-                names: ['addrole', 'role'],
+                names: ['addrole', 'role', 'setrole'],
                 action: this.addRoleCommand,
                 parameters: '{{type}} {{mentions}}',
             },

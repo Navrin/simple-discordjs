@@ -12,6 +12,16 @@ declare enum RoleTypes {
     OWNER = 3,
     SUPERUSER = 4,
 }
+export interface AuthOptions {
+    /**
+     * Automatically delete commands that are denied after a set time.
+     *
+     * @type {boolean}
+     * @memberof AuthOptions
+     */
+    deleteMessages?: boolean;
+    deleteMessageDelay?: number;
+}
 /**
  * Auth helper! Uses a enumerable with different roles. If a role is higher or equal to the needed role, then allow the message.
  *
@@ -21,7 +31,8 @@ declare class Auth {
     connection: ConnectionManager;
     superuser: string;
     connectionSettings: ConnectionOptions;
-    constructor(superuser: string);
+    options: AuthOptions;
+    constructor(superuser: string, options?: AuthOptions);
     /**
      * Authenticate the user, finding their highest role and checking
      * it against the requirement for the command.

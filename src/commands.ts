@@ -187,7 +187,7 @@ export default class Commands {
                 // create the named parameter object.
                 await this.checkMiddleware(message, commandSchema.definition);
                 // check the middleware's response before executing.
-                commandSchema.definition.command.action(message, commandSchema.definition, parameters, this.client);
+                commandSchema.definition.command.action(message, commandSchema.definition, parameters, this.client, this);
                 // rate limiting, don't try to send a million messages at once,
                 // otherwise discord will rate limit us
                 if (this.options.deleteCommandMessage && prefixed) {
