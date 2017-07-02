@@ -62,11 +62,11 @@ export interface CommandDescription {
     /** An example in the code block for the use of the command. */
     example?: string;
 }
-export interface ParameterDefinition<P = {
-    [key: string]: any;
-}> {
+export interface ParameterDefinition {
     array: string[];
-    named?: P;
+    named?: {
+        [key: string]: string;
+    };
 }
 export interface Prefixer {
     str: string;

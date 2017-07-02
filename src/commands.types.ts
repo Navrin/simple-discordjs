@@ -80,9 +80,11 @@ export interface CommandDescription {
     example?: string;
 }
 
-export interface ParameterDefinition<P = { [key: string]: any }> {
+export interface ParameterDefinition {
     array: string[];
-    named?: P;
+    named?: {
+        [key: string]: string;
+    };
 }
 
 export interface Prefixer {
