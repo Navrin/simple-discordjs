@@ -51,6 +51,8 @@ class Auth {
                 storage: 'commander_entities.db',
             },
             entities,
+            autoMigrationsRun: true,
+            autoSchemaSync: true,
         };
         this.options = {
             deleteMessages: false,

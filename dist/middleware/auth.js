@@ -136,6 +136,8 @@ class Auth {
                 storage: 'commander_entities.db',
             },
             entities: entities_1.default,
+            autoMigrationsRun: true,
+            autoSchemaSync: true,
         };
         this.options = Object.assign({ deleteMessages: false, deleteMessageDelay: 0 }, options);
         typeorm_1.createConnection(this.connectionSettings);
