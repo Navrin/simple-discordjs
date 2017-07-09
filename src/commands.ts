@@ -191,7 +191,11 @@ export default class Commands {
                 // rate limiting, don't try to send a million messages at once,
                 // otherwise discord will rate limit us
                 if (this.options.deleteCommandMessage && prefixed) {
-                    message.delete(this.options.deleteMessageDelay || 0);
+                    message.delete(this.options.deleteMessageDelay || 0)
+                        .catch((e) => {
+                            // message was probably already deleted by other methods.
+                            // TODO: catch permission errors. respond gracefully.
+                        });
                 }
             }
         } catch (e) {
