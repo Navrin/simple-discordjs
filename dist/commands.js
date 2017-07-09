@@ -195,6 +195,13 @@ class Commands {
         });
     }
     /**
+     * Verfies the command's existance, this command is unlikely to be used often.
+     * @param command
+     */
+    checkCommandExists(command) {
+        return this.commands[command] !== undefined;
+    }
+    /**
      * Generates a prefixed help command from the current commands.
      * @param {Discord.RichEmbed} descriptor
      */

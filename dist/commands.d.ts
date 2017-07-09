@@ -103,6 +103,11 @@ export default class Commands {
      */
     message(message: Discord.Message): Promise<void>;
     /**
+     * Verfies the command's existance, this command is unlikely to be used often.
+     * @param command
+     */
+    checkCommandExists(command: string): boolean;
+    /**
      * Generates a prefixed help command from the current commands.
      * @param {Discord.RichEmbed} descriptor
      */

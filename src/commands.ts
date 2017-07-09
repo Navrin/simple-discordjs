@@ -203,6 +203,14 @@ export default class Commands {
     }
 
     /**
+     * Verfies the command's existance, this command is unlikely to be used often.
+     * @param command
+     */
+    public checkCommandExists(command: string): boolean {
+        return this.commands[command] !== undefined;
+    }
+
+    /**
      * Generates a prefixed help command from the current commands.
      * @param {Discord.RichEmbed} descriptor
      */
