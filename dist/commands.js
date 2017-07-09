@@ -468,7 +468,15 @@ class Commands {
         }
         catch (e) {
             message.channel.send(common_tags_1.oneLineTrim `Please format your ${templater.content || 'empty message'} 
-            to match ${(templater.template || 'template not defined?')}`);
+            to match ${(templater.template || 'template not defined?')}`)
+                .then((msg) => {
+                if (this.options.deleteCommandMessage) {
+                    Array.isArray(msg)
+                        ? msg[0].delete(this.options.deleteMessageDelay)
+                        : msg.delete(this.options.deleteMessageDelay);
+                    message.delete(this.options.deleteMessageDelay);
+                }
+            });
             throw new commands_types_1.CommandError('The parameters are not correct.');
         }
     }
