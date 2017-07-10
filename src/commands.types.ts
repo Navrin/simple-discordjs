@@ -124,4 +124,12 @@ export interface CommandsOptions {
      * @memberof CommandsOptions
      */
     deleteMessageDelay?: number;
+
+    /**
+     * Automatically delete error messages
+     * // TODO: catch all errors.
+     * @type {number}
+     * @memberof CommandsOptions
+     */
+    killErrorMessages?: boolean;
 }

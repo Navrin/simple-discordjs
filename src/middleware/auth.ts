@@ -5,6 +5,7 @@ import { ConnectionManager, ConnectionOptions, createConnection, getRepository }
 import { MiddlewareFunction, CommandFunction, CommandDefinition } from '../commands.types';
 import entities from './database/entities';
 import * as Discord from 'discord.js';
+import { confirm } from './confirmer';
 
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
@@ -219,7 +220,7 @@ class Auth {
             roleRepo.persist(roleRecord);
         }
 
-        message.channel.send(`Roles have been added to the command permissions!`);
+        confirm(message, 'success', undefined, { delete: false, delay: 0 });
         return true;
     }
 }

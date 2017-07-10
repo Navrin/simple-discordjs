@@ -13,6 +13,7 @@ const actions_1 = require("./database/guild/actions");
 const model_2 = require("./database/guild/model");
 const typeorm_1 = require("typeorm");
 const entities_1 = require("./database/entities");
+const confirmer_1 = require("./confirmer");
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
  * For non role'd commands / all user commands use 0 to check for falsey.
@@ -126,7 +127,7 @@ class Auth {
                 roleRecord.type = enumType;
                 roleRepo.persist(roleRecord);
             }
-            message.channel.send(`Roles have been added to the command permissions!`);
+            confirmer_1.confirm(message, 'success', undefined, { delete: false, delay: 0 });
             return true;
         });
         this.connectionSettings = {

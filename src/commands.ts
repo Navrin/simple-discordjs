@@ -24,6 +24,7 @@ const defaultOptions: CommandsOptions = {
     botType: 'normal',
     deleteCommandMessage: false,
     deleteMessageDelay: 0,
+    killErrorMessages: false,
 };
 
 /**
@@ -538,13 +539,13 @@ export default class Commands {
                 oneLineTrim`Please format your ${templater.content || 'empty message'} 
             to match ${(templater.template || 'template not defined?')}`)
                 .then((msg) => {
-                    if (this.options.deleteCommandMessage) {
+                    if (this.options.killErrorMessages) {
                         Array.isArray(msg)
                             ? msg[0].delete(this.options.deleteMessageDelay)
                             : msg.delete(this.options.deleteMessageDelay);
                         message.delete(this.options.deleteMessageDelay);
                     }
-                })
+                });
 
             throw new CommandError('The parameters are not correct.');
         }

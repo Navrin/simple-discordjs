@@ -19,6 +19,7 @@ const defaultOptions = {
     botType: 'normal',
     deleteCommandMessage: false,
     deleteMessageDelay: 0,
+    killErrorMessages: false,
 };
 /**
  * Command Class. Allows for easier usage and management of
@@ -474,7 +475,7 @@ class Commands {
             message.channel.send(common_tags_1.oneLineTrim `Please format your ${templater.content || 'empty message'} 
             to match ${(templater.template || 'template not defined?')}`)
                 .then((msg) => {
-                if (this.options.deleteCommandMessage) {
+                if (this.options.killErrorMessages) {
                     Array.isArray(msg)
                         ? msg[0].delete(this.options.deleteMessageDelay)
                         : msg.delete(this.options.deleteMessageDelay);
