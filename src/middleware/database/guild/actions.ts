@@ -7,6 +7,5 @@ export const createGuildIfNone = async (message: Discord.Message) => {
     const guild = new Guild();
     guild.id = message.guild.id;
     await guildRepo.persist(guild);
-    message.channel.send(`${message.guild.name} has been added to the database`);
     return guild;
 };
