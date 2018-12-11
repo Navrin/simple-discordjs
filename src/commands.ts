@@ -1,9 +1,9 @@
-import { oneLineTrim, stripIndents } from 'common-tags';
-import * as Discord from 'discord.js';
-import { chunk } from 'lodash';
-import * as mustache from 'mustache';
-import escapeStringRegexp = require('escape-string-regexp');
-const reverseMustache = require('reverse-mustache');
+import { oneLineTrim, stripIndents } from "common-tags";
+import * as Discord from "discord.js";
+import { chunk } from "lodash";
+import * as mustache from "mustache";
+import escapeStringRegexp = require("escape-string-regexp");
+const reverseMustache = require("reverse-mustache");
 import {
     CommandFunction,
     PreMessageFunction,
@@ -17,11 +17,10 @@ import {
     CommandsOptions,
     CommandError,
     botTypes,
-} from './commands.types';
-
+} from "./commands.types";
 
 const defaultOptions: CommandsOptions = {
-    botType: 'normal',
+    botType: "normal",
     deleteCommandMessage: false,
     deleteMessageDelay: 0,
     killErrorMessages: false,
@@ -74,14 +73,18 @@ export default class Commands {
      * @param {discord.Client} client - discord client, used for easy reference.
      * @memberof Commands
      */
-    constructor(prefix: string, client: Discord.Client, options?: CommandsOptions) {
+    constructor(
+        prefix: string,
+        client: Discord.Client,
+        options?: CommandsOptions,
+    ) {
         this.defaultPrefix = {
             str: prefix,
             regex: new RegExp(`(${escapeStringRegexp(prefix)})?(.+)`),
         };
         this.client = client;
         this.commands = {};
-        this.options = { defaultOptions, ...options };
+        this.options = { ...defaultOptions, ...options };
         this.patterns = new Map();
         this.funcs = new Map();
         this.middlewares = [];
@@ -178,22 +181,37 @@ export default class Commands {
         }
 
         try {
-            const [chatPrefix, chatCommand, ...parameterArray] = this.parseRequest(message);
+            const [
+                chatPrefix,
+                chatCommand,
+                ...parameterArray
+            ] = this.parseRequest(message);
             const commands = this.getCommand(chatCommand, chatPrefix, message);
 
             for (const commandSchema of commands) {
                 const prefixed = this.checkPrefix(chatPrefix, commandSchema);
                 // check if the function needs a prefix
-                const parameters = this.createParameters(parameterArray, commandSchema.definition, message);
+                const parameters = this.createParameters(
+                    parameterArray,
+                    commandSchema.definition,
+                    message,
+                );
                 // create the named parameter object.
                 await this.checkMiddleware(message, commandSchema.definition);
                 // check the middleware's response before executing.
-                commandSchema.definition.command.action(message, commandSchema.definition, parameters, this.client, this);
+                commandSchema.definition.command.action(
+                    message,
+                    commandSchema.definition,
+                    parameters,
+                    this.client,
+                    this,
+                );
                 // rate limiting, don't try to send a million messages at once,
                 // otherwise discord will rate limit us
                 if (this.options.deleteCommandMessage && prefixed) {
-                    message.delete(this.options.deleteMessageDelay || 0)
-                        .catch((e) => {
+                    message
+                        .delete(this.options.deleteMessageDelay || 0)
+                        .catch(e => {
                             // message was probably already deleted by other methods.
                             // TODO: catch permission errors. respond gracefully.
                         });
@@ -227,17 +245,17 @@ export default class Commands {
          */
         const showPrefixed = (desc: CommandDescription, info: CommandSchema) =>
             info.aliases
-                .map((cmd) => {
+                .map(cmd => {
                     const prefix = this.defaultPrefix.str;
-                    const param = info.definition.command.parameters || '';
+                    const param = info.definition.command.parameters || "";
 
-                    return (info.definition.command.noPrefix || info.pattern)
+                    return info.definition.command.noPrefix || info.pattern
                         ? `${cmd} ${param}`
                         : `${prefix}${cmd} ${param}`;
                 })
-                .join(', ');
+                .join(", ");
 
-        const descriptors = [];
+        const descriptors: { name: string; value: string }[] = [];
 
         // not using Array.from.
         // causing garbage collector memory leak errors.
@@ -247,19 +265,21 @@ export default class Commands {
                 continue;
             }
             const prefix = this.defaultPrefix.str;
-            const ticks = '```'; // cleaner than trying to escape 3 backticks.
+            const ticks = "```"; // cleaner than trying to escape 3 backticks.
 
             // use a mustache render to provide a static template with the prefix,
             // can't use string templating, as the prefixes should be dynamic.
-            const example = mustache.render(desc.information.example || '', { prefix });
+            const example = mustache.render(desc.information.example || "", {
+                prefix,
+            });
             // example message, newlines are not allowed in the plaintext field content,
             // so provide the newline in the codeblock instead.
-            const exampleMessage = (example)
+            const exampleMessage = example
                 ? stripIndents`${ticks}ini
                               # Example use of the command:
                               ${example}
                               ${ticks}`
-                : '';
+                : "";
             descriptors.push({
                 name: `**${showPrefixed(desc.information, desc)}**`,
                 value: oneLineTrim`${desc.information.message} 
@@ -273,10 +293,12 @@ export default class Commands {
 
         // please leave this in :)
         const signature = new Discord.RichEmbed()
-            .setAuthor('Discord Commands (developed by Navrin)')
-            .setDescription(stripIndents`Use bots with discord.js? Consider checking out
-                                         my [commands helper](github.com/Navrin/)`)
-            .addField('GitHub', 'https://www.github.com/Navrin')
+            .setAuthor("Discord Commands (developed by Navrin)")
+            .setDescription(
+                stripIndents`Use bots with discord.js? Consider checking out
+                                         my [commands helper](github.com/Navrin/)`,
+            )
+            .addField("GitHub", "https://www.github.com/Navrin")
             .setURL(`https://www.github.com/Navrin`);
 
         /**
@@ -284,10 +306,16 @@ export default class Commands {
          * @param message
          * @param parameters
          */
-        const help: CommandFunction = async (message, definition, parameters) => {
+        const help: CommandFunction = async (
+            message,
+            definition,
+            parameters,
+        ) => {
             try {
                 await message.channel.send(
-                    `Help has been sent to your PMs, ${message.author.username}!`,
+                    `Help has been sent to your PMs, ${
+                        message.author.username
+                    }!`,
                 );
 
                 await message.author.send(
@@ -297,16 +325,16 @@ export default class Commands {
 
                 // loop through the chunks and send them as embeds.
                 for (const chunk of functionDescriptions) {
-                    await message.author.send('', { embed: { fields: chunk } });
+                    await message.author.send("", { embed: { fields: chunk } });
                 }
 
                 // use the custom descriptor embed, if provided.
                 if (descriptor) {
-                    await message.author.send('', { embed: descriptor });
+                    await message.author.send("", { embed: descriptor });
                 }
 
                 // signature to github, to help other developers find this library.
-                await message.author.send('', { embed: signature });
+                await message.author.send("", { embed: signature });
 
                 return true;
             } catch (e) {
@@ -317,7 +345,7 @@ export default class Commands {
         // Defining help as a command with the pre-existing command function.
         this.defineCommand({
             command: {
-                names: ['help', 'h'],
+                names: ["help", "h"],
                 action: help,
             },
         });
@@ -335,7 +363,7 @@ export default class Commands {
      * @memberof Commands
      */
     public listen(customFunc?: PreMessageFunction): Commands {
-        this.client.on('message', (discordMessage) => {
+        this.client.on("message", discordMessage => {
             if (customFunc) {
                 customFunc(discordMessage);
             }
@@ -350,16 +378,21 @@ export default class Commands {
      * PRIVATE *
      ***********/
 
-    private botVerify = (botType: botTypes): (message: Discord.Message) => boolean => {
+    private botVerify = (
+        botType: botTypes,
+    ): ((message: Discord.Message) => boolean) => {
         switch (botType) {
-            case 'self':
-                return (message: Discord.Message) => this.client.user.id === message.author.id;
-            case 'guildonly':
-                return (message: Discord.Message) => message.channel.type === 'text';
+            case "self":
+                return (message: Discord.Message) =>
+                    this.client.user.id === message.author.id;
+            case "guildonly":
+                return (message: Discord.Message) =>
+                    message.channel.type === "text";
             default:
-                return (message: Discord.Message) => message.author.id !== this.client.user.id;
+                return (message: Discord.Message) =>
+                    message.author.id !== this.client.user.id;
         }
-    }
+    };
 
     /**
      * Pattern Command, for regex matching commands.
@@ -372,7 +405,10 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private patternCommand(regex: RegExp, definition: CommandDefinition): Commands {
+    private patternCommand(
+        regex: RegExp,
+        definition: CommandDefinition,
+    ): Commands {
         const commandNames = definition.command.names;
         const reference = Symbol(commandNames[0]);
         this.funcs.set(reference, {
@@ -400,12 +436,13 @@ export default class Commands {
      */
     private checkMiddleware(
         message: Discord.Message,
-        definition: CommandDefinition): Promise<boolean> {
+        definition: CommandDefinition,
+    ): Promise<boolean> {
         return new Promise(async (resolve, reject) => {
             for (const ware of this.middlewares) {
                 const result = await ware(message, definition, this.client);
                 if (!result) {
-                    reject(new CommandError('Middlware Rejection!'));
+                    reject(new CommandError("Middlware Rejection!"));
                 }
             }
             resolve(true);
@@ -426,12 +463,16 @@ export default class Commands {
         // transforms the message into a more parse-able list
         // y!goodboye target will become
         // ["y!goodboye", "target"]
-        const [fullCommand, ...parameters] = message.content.trim().split(/\s/gmi);
+        const [fullCommand, ...parameters] = message.content
+            .trim()
+            .split(/\s/gim);
 
         // /(prefix)?(.+)/ message is match to this regex.
         const search = this.defaultPrefix.regex.exec(fullCommand);
         if (!search) {
-            throw new CommandError(`Message is malformed, not a correct command request.`);
+            throw new CommandError(
+                `Message is malformed, not a correct command request.`,
+            );
         }
         // ignore first full match.
         const [, chatPrefix, chatCommand] = search;
@@ -464,8 +505,10 @@ export default class Commands {
         this.checkPatterns(commands, message);
 
         if (commands.length <= 0) {
-            if (chatPrefix === this.defaultPrefix.str
-                && !message.content.startsWith(this.defaultPrefix.str.repeat(2))) {
+            if (
+                chatPrefix === this.defaultPrefix.str &&
+                !message.content.startsWith(this.defaultPrefix.str.repeat(2))
+            ) {
                 message.channel.send(oneLineTrim`Command not found! 
                 Consider sending ${this.defaultPrefix.str}help.`);
             }
@@ -501,12 +544,21 @@ export default class Commands {
      * @param chatPrefix
      * @param command
      */
-    private checkPrefix(chatPrefix: string, commandSchema: CommandSchema): boolean {
-        if (!chatPrefix && !commandSchema.definition.command.noPrefix && !commandSchema.pattern) {
+    private checkPrefix(
+        chatPrefix: string,
+        commandSchema: CommandSchema,
+    ): boolean {
+        if (
+            !chatPrefix &&
+            !commandSchema.definition.command.noPrefix &&
+            !commandSchema.pattern
+        ) {
             // if command is valid + requires a prefix and there is no prefix for the command
             throw new CommandError(`Function requires a prefix.`);
         }
-        return !(commandSchema.definition.command.noPrefix || commandSchema.pattern);
+        return !(
+            commandSchema.definition.command.noPrefix || commandSchema.pattern
+        );
     }
 
     /**
@@ -519,26 +571,32 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private createParameters(parameterArray: string[], definition: CommandDefinition, message: Discord.Message): ParameterDefinition {
+    private createParameters(
+        parameterArray: string[],
+        definition: CommandDefinition,
+        message: Discord.Message,
+    ): ParameterDefinition {
         const templater = {
             template: definition.command.parameters,
-            content: parameterArray.join(' '),
+            content: parameterArray.join(" "),
         };
 
         try {
-            const named =
-                (definition.command.parameters)
-                    ? reverseMustache(templater)
-                    : null;
+            const named = definition.command.parameters
+                ? reverseMustache(templater)
+                : null;
             return {
                 named,
                 array: parameterArray,
             };
         } catch (e) {
-            message.channel.send(
-                oneLineTrim`Please format your ${templater.content || 'empty message'} 
-            to match ${(templater.template || 'template not defined?')}`)
-                .then((msg) => {
+            message.channel
+                .send(
+                    oneLineTrim`Please format your ${templater.content ||
+                        "empty message"} 
+            to match ${templater.template || "template not defined?"}`,
+                )
+                .then(msg => {
                     if (this.options.killErrorMessages) {
                         Array.isArray(msg)
                             ? msg[0].delete(this.options.deleteMessageDelay)
@@ -547,7 +605,7 @@ export default class Commands {
                     }
                 });
 
-            throw new CommandError('The parameters are not correct.');
+            throw new CommandError("The parameters are not correct.");
         }
     }
 }

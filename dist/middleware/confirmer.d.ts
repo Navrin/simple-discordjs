@@ -10,4 +10,4 @@ export interface ConfirmOptions {
     delay: number;
 }
 declare const confirm: (message: Discord.Message, type: "success" | "failure", reason?: string | undefined, options?: ConfirmOptions) => Promise<void>;
-export { confirm, statusCodes };
+export { confirm, statusCodes, };

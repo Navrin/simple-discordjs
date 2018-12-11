@@ -1,5 +1,5 @@
-import * as Discord from 'discord.js';
-import { PreMessageFunction, MiddlewareFunction, CommandDefinition, Prefixer, CommandsOptions } from './commands.types';
+import * as Discord from "discord.js";
+import { PreMessageFunction, MiddlewareFunction, CommandDefinition, Prefixer, CommandsOptions } from "./commands.types";
 /**
  * Command Class. Allows for easier usage and management of
  * bot commands. Usage will be as follows.
@@ -137,7 +137,7 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private patternCommand(regex, definition);
+    private patternCommand;
     /**
      * Middleware loop, will check each middleware and
      * throw an Error on a non-ok result for the ware.
@@ -149,7 +149,7 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private checkMiddleware(message, definition);
+    private checkMiddleware;
     /**
      * Parse the discord message and split it into its
      * appropriate parameters for ease of use.
@@ -160,7 +160,7 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private parseRequest(message);
+    private parseRequest;
     /**
      * Get command, and the correct function for it from the func cache.
      *
@@ -172,7 +172,7 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private getCommand(chatCommand, chatPrefix, message);
+    private getCommand;
     /**
      * Check the patterns defined with patternCommand.
      *
@@ -182,13 +182,13 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private checkPatterns(commands, message);
+    private checkPatterns;
     /**
      * Checks if prefix is needed, valid, and that the functor is not a pattern.
      * @param chatPrefix
      * @param command
      */
-    private checkPrefix(chatPrefix, commandSchema);
+    private checkPrefix;
     /**
      * Creates a parameter object from the user arguments.
      * If the arugments aren't correct, send a null.
@@ -199,5 +199,5 @@ export default class Commands {
      *
      * @memberof Commands
      */
-    private createParameters(parameterArray, definition, message);
+    private createParameters;
 }

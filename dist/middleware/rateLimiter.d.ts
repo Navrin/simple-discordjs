@@ -26,11 +26,11 @@ export declare class RateLimiter {
      * Check if use is allowed to send more commands to the bot.
      * @param id
      */
-    private checkUser(this, id);
+    private checkUser;
     /**
      * Helper method
      * Times out the user filter.
      * @param id
      */
-    private deferClear(id);
+    private deferClear;
 }

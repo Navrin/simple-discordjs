@@ -4,7 +4,8 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
-        "strict": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noLib": false,
@@ -13,17 +14,8 @@
         "noUnusedLocals": true,
         "pretty": true,
         "allowSyntheticDefaultImports": true,
-        "lib": [
-            "es6",
-            "es7",
-            "dom"
-        ]
+        "lib": ["es6", "es7", "dom"]
     },
-    "include": [
-        "typings.d.ts",
-        "src/**/**.*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": ["typings.d.ts", "src/**/**.*"],
+    "exclude": ["node_modules"]
 }

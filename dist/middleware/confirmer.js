@@ -14,9 +14,9 @@ const statusCodes = {
 };
 exports.statusCodes = statusCodes;
 const confirm = (message, type, reason, options = {
-        delete: true,
-        delay: 3000,
-    }) => __awaiter(this, void 0, void 0, function* () {
+    delete: true,
+    delay: 3000,
+}) => __awaiter(this, void 0, void 0, function* () {
     message.react(statusCodes[type]);
     if (reason) {
         const replyMessage = yield message.reply(`**Alert:** ${reason}`);

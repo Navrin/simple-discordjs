@@ -1,5 +1,5 @@
-import { ConnectionManager, ConnectionOptions } from 'typeorm';
-import { MiddlewareFunction, CommandDefinition } from '../commands.types';
+import { ConnectionManager, ConnectionOptions } from "typeorm";
+import { MiddlewareFunction, CommandDefinition } from "../commands.types";
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
  * For non role'd commands / all user commands use 0 to check for falsey.
@@ -10,7 +10,7 @@ declare enum RoleTypes {
     MOD = 1,
     ADMIN = 2,
     OWNER = 3,
-    SUPERUSER = 4,
+    SUPERUSER = 4
 }
 export interface AuthOptions {
     /**
@@ -66,7 +66,7 @@ declare class Auth {
      *
      * @memberof Auth
      */
-    private getHighestRole(message);
+    private getHighestRole;
     /**
      * Persist a role to the guild's database.
      *

@@ -11,10 +11,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const model_1 = require("./model");
 exports.createGuildIfNone = (message) => __awaiter(this, void 0, void 0, function* () {
-    const guildRepo = yield typeorm_1.getRepository(model_1.Guild, 'commander_connection');
+    const guildRepo = yield typeorm_1.getRepository(model_1.Guild, "commander_connection");
     const guild = new model_1.Guild();
     guild.id = message.guild.id;
-    yield guildRepo.persist(guild);
+    yield guildRepo.save(guild);
     return guild;
 });
 //# sourceMappingURL=actions.js.map

@@ -12,11 +12,11 @@ const model_1 = require("./model");
 const typeorm_1 = require("typeorm");
 const createUserIfNone = (discordUser, connection, options = {}) => __awaiter(this, void 0, void 0, function* () {
     try {
-        const userRepo = yield typeorm_1.getRepository(model_1.User, 'commander_connection');
+        const userRepo = yield typeorm_1.getRepository(model_1.User, "commander_connection");
         const user = new model_1.User();
         user.id = discordUser.id;
         user.name = discordUser.username;
-        yield userRepo.persist(user);
+        yield userRepo.save(user);
         return true;
     }
     catch (e) {

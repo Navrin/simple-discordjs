@@ -1,5 +1,5 @@
-import * as Discord from 'discord.js';
-import { Connection } from 'typeorm';
+import * as Discord from "discord.js";
+import { Connection } from "typeorm";
 export interface CreateUserOptions {
     createdFromBark?: boolean;
     createdFromYTB?: boolean;

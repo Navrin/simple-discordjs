@@ -1,11 +1,20 @@
-import { Role } from './database/role/model';
-import { createGuildIfNone } from './database/guild/actions';
-import { Guild } from './database/guild/model';
-import { ConnectionManager, ConnectionOptions, createConnection, getRepository } from 'typeorm';
-import { MiddlewareFunction, CommandFunction, CommandDefinition } from '../commands.types';
-import entities from './database/entities';
-import * as Discord from 'discord.js';
-import { confirm } from './confirmer';
+import { Role } from "./database/role/model";
+import { createGuildIfNone } from "./database/guild/actions";
+import { Guild } from "./database/guild/model";
+import {
+    ConnectionManager,
+    ConnectionOptions,
+    createConnection,
+    getRepository,
+} from "typeorm";
+import {
+    MiddlewareFunction,
+    CommandFunction,
+    CommandDefinition,
+} from "../commands.types";
+import entities from "./database/entities";
+import * as Discord from "discord.js";
+import { confirm } from "./confirmer";
 
 /**
  * Roletypes to be checked, using an enumerable instead of string literals.
@@ -18,8 +27,7 @@ enum RoleTypes {
     ADMIN,
     OWNER,
     SUPERUSER,
-};
-
+}
 
 export interface AuthOptions {
     /**
@@ -46,14 +54,12 @@ class Auth {
 
     constructor(superuser: string, options: AuthOptions = {}) {
         this.connectionSettings = {
-            name: 'commander_connection',
-            driver: {
-                type: 'sqlite',
-                storage: 'commander_entities.db',
-            },
+            name: "commander_connection",
+            type: "sqlite",
+            database: "./commander_entities.db",
             entities,
-            autoMigrationsRun: true,
-            autoSchemaSync: true,
+            migrationsRun: true,
+            synchronize: true,
         };
         this.options = {
             deleteMessages: false,
@@ -62,7 +68,7 @@ class Auth {
         };
 
         createConnection(this.connectionSettings);
-         // the database is essentially the 'state' anyway.
+        // the database is essentially the 'state' anyway.
         this.superuser = superuser;
     }
 
@@ -73,7 +79,11 @@ class Auth {
      * @type {MiddlewareFunction}
      * @memberof Auth
      */
-    public authenticate: MiddlewareFunction = async (message, options, client) => {
+    public authenticate: MiddlewareFunction = async (
+        message,
+        options,
+        client,
+    ) => {
         if (!options.authentication) {
             return true;
         }
@@ -82,7 +92,7 @@ class Auth {
         // if the user's maximum role is higher or equal to the required
         // authentication needed for the command.
         if (fastCheck >= options.authentication) {
-            return fastCheck;
+            return !!fastCheck;
         }
 
         // user* are Discord.js results for the user.
@@ -90,11 +100,11 @@ class Auth {
         const userGuildRoles = Array.from(userGuildMember.roles.values());
         const userRoleIds = userGuildRoles.map(role => role.id);
 
-        const roleRepo = await getRepository(Role, 'commander_connection');
+        const roleRepo = await getRepository(Role, "commander_connection");
         const roleRecords = await roleRepo
-            .createQueryBuilder('role')
-            .where('role.guild = :guild', { guild: message.guild.id })
-            .andWhere('role.type <= :type', { type: options.authentication })
+            .createQueryBuilder("role")
+            .where("role.guild = :guild", { guild: message.guild.id })
+            .andWhere("role.type <= :type", { type: options.authentication })
             .andWhereInIds(userRoleIds)
             .getCount();
 
@@ -102,16 +112,18 @@ class Auth {
             return true;
         }
 
-        const msg = await message.channel.send(`🚫 You're not allowed to use this command.`);
+        const msg = await message.channel.send(
+            `🚫 You're not allowed to use this command.`,
+        );
         if (this.options.deleteMessages) {
-            (Array.isArray(msg))
+            Array.isArray(msg)
                 ? msg[0].delete(this.options.deleteMessageDelay)
                 : msg.delete(this.options.deleteMessageDelay);
 
             message.delete(this.options.deleteMessageDelay);
         }
         return false;
-    }
+    };
 
     /**
      * The chat command for adding roles to a guild.
@@ -124,14 +136,15 @@ class Auth {
     public getCommand(this: Auth) {
         const command: CommandDefinition = {
             command: {
-                names: ['addrole', 'role', 'setrole'],
+                names: ["addrole", "role", "setrole"],
                 action: this.addRoleCommand,
-                parameters: '{{type}} {{mentions}}',
+                parameters: "{{type}} {{mentions}}",
             },
             authentication: RoleTypes.OWNER,
             description: {
-                message: 'Add a role to the auth types. You may use either `mod` or `admin`',
-                example: '{{prefix}}addrole mod @mods',
+                message:
+                    "Add a role to the auth types. You may use either `mod` or `admin`",
+                example: "{{prefix}}addrole mod @mods",
             },
         };
         return command;
@@ -147,15 +160,15 @@ class Auth {
         message,
         options,
         parameters: {
-            array: string[],
+            array: string[];
             named: {
                 type: string;
-            },
-        }
-        ) => {
+            };
+        },
+    ) => {
         const role = parameters.named.type.toLowerCase();
 
-        if (!['mod', 'admin'].includes(role)) {
+        if (!["mod", "admin"].includes(role)) {
             message.channel.send(`${role} was not found as a role.`);
             return false;
         }
@@ -164,7 +177,7 @@ class Auth {
             message.channel.send(`There was an issue adding the roles.`);
         }
         return true;
-    }
+    };
     /**
      * Returns the highest possible role for the user,
      * since all roles are numbers, its easy to compare < or >.
@@ -191,7 +204,10 @@ class Auth {
      *
      * @memberof Auth
      */
-    private setRole = async (message: Discord.Message, type: string): Promise<boolean> => {
+    private setRole = async (
+        message: Discord.Message,
+        type: string,
+    ): Promise<boolean> => {
         const roles = Array.from(message.mentions.roles);
         if (roles.length <= 0) {
             message.channel.send(`You didn't specify any roles to add.`);
@@ -201,31 +217,33 @@ class Auth {
         // wot in tarnation?
         // sadly, typescript doesn't let you access an enumerable via the enum[key] way.
         // adding [key: string]: number will incur a compile error. so, any hacks!
-        const enumType: number | undefined = (RoleTypes as any)[type.toUpperCase()];
+        const enumType: number | undefined = (RoleTypes as any)[
+            type.toUpperCase()
+        ];
         if (!enumType) {
-            message.channel.send(`Role ${type} was not found. Check .h for the role names.`);
+            message.channel.send(
+                `Role ${type} was not found. Check .h for the role names.`,
+            );
             return false;
         }
 
-        const roleRepo = await getRepository(Role, 'commander_connection');
-        const guildRepo = await getRepository(Guild, 'commander_connection');
-        const guild = await guildRepo.findOneById(message.guild.id)
-            || await createGuildIfNone(message);
+        const roleRepo = await getRepository(Role, "commander_connection");
+        const guildRepo = await getRepository(Guild, "commander_connection");
+        const guild =
+            (await guildRepo.findByIds([message.guild.id])[0]) ||
+            (await createGuildIfNone(message));
 
         for (const [, role] of roles) {
             const roleRecord = new Role();
             roleRecord.id = role.id;
             roleRecord.guild = guild;
             roleRecord.type = enumType;
-            roleRepo.persist(roleRecord);
+            roleRepo.save(roleRecord);
         }
 
-        confirm(message, 'success', undefined, { delete: false, delay: 0 });
+        confirm(message, "success", undefined, { delete: false, delay: 0 });
         return true;
-    }
+    };
 }
 
-export {
-    Auth,
-    RoleTypes,
-};
+export { Auth, RoleTypes };

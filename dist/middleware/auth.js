@@ -28,7 +28,6 @@ var RoleTypes;
     RoleTypes[RoleTypes["SUPERUSER"] = 4] = "SUPERUSER";
 })(RoleTypes || (RoleTypes = {}));
 exports.RoleTypes = RoleTypes;
-;
 /**
  * Auth helper! Uses a enumerable with different roles. If a role is higher or equal to the needed role, then allow the message.
  *
@@ -51,17 +50,17 @@ class Auth {
             // if the user's maximum role is higher or equal to the required
             // authentication needed for the command.
             if (fastCheck >= options.authentication) {
-                return fastCheck;
+                return !!fastCheck;
             }
             // user* are Discord.js results for the user.
             const userGuildMember = message.guild.member(message.author);
             const userGuildRoles = Array.from(userGuildMember.roles.values());
             const userRoleIds = userGuildRoles.map(role => role.id);
-            const roleRepo = yield typeorm_1.getRepository(model_1.Role, 'commander_connection');
+            const roleRepo = yield typeorm_1.getRepository(model_1.Role, "commander_connection");
             const roleRecords = yield roleRepo
-                .createQueryBuilder('role')
-                .where('role.guild = :guild', { guild: message.guild.id })
-                .andWhere('role.type <= :type', { type: options.authentication })
+                .createQueryBuilder("role")
+                .where("role.guild = :guild", { guild: message.guild.id })
+                .andWhere("role.type <= :type", { type: options.authentication })
                 .andWhereInIds(userRoleIds)
                 .getCount();
             if (roleRecords > 0) {
@@ -69,7 +68,7 @@ class Auth {
             }
             const msg = yield message.channel.send(`🚫 You're not allowed to use this command.`);
             if (this.options.deleteMessages) {
-                (Array.isArray(msg))
+                Array.isArray(msg)
                     ? msg[0].delete(this.options.deleteMessageDelay)
                     : msg.delete(this.options.deleteMessageDelay);
                 message.delete(this.options.deleteMessageDelay);
@@ -85,7 +84,7 @@ class Auth {
          */
         this.addRoleCommand = (message, options, parameters) => __awaiter(this, void 0, void 0, function* () {
             const role = parameters.named.type.toLowerCase();
-            if (!['mod', 'admin'].includes(role)) {
+            if (!["mod", "admin"].includes(role)) {
                 message.channel.send(`${role} was not found as a role.`);
                 return false;
             }
@@ -116,29 +115,27 @@ class Auth {
                 message.channel.send(`Role ${type} was not found. Check .h for the role names.`);
                 return false;
             }
-            const roleRepo = yield typeorm_1.getRepository(model_1.Role, 'commander_connection');
-            const guildRepo = yield typeorm_1.getRepository(model_2.Guild, 'commander_connection');
-            const guild = (yield guildRepo.findOneById(message.guild.id))
-                || (yield actions_1.createGuildIfNone(message));
+            const roleRepo = yield typeorm_1.getRepository(model_1.Role, "commander_connection");
+            const guildRepo = yield typeorm_1.getRepository(model_2.Guild, "commander_connection");
+            const guild = (yield guildRepo.findByIds([message.guild.id])[0]) ||
+                (yield actions_1.createGuildIfNone(message));
             for (const [, role] of roles) {
                 const roleRecord = new model_1.Role();
                 roleRecord.id = role.id;
                 roleRecord.guild = guild;
                 roleRecord.type = enumType;
-                roleRepo.persist(roleRecord);
+                roleRepo.save(roleRecord);
             }
-            confirmer_1.confirm(message, 'success', undefined, { delete: false, delay: 0 });
+            confirmer_1.confirm(message, "success", undefined, { delete: false, delay: 0 });
             return true;
         });
         this.connectionSettings = {
-            name: 'commander_connection',
-            driver: {
-                type: 'sqlite',
-                storage: 'commander_entities.db',
-            },
+            name: "commander_connection",
+            type: "sqlite",
+            database: "./commander_entities.db",
             entities: entities_1.default,
-            autoMigrationsRun: true,
-            autoSchemaSync: true,
+            migrationsRun: true,
+            synchronize: true,
         };
         this.options = Object.assign({ deleteMessages: false, deleteMessageDelay: 0 }, options);
         typeorm_1.createConnection(this.connectionSettings);
@@ -156,14 +153,14 @@ class Auth {
     getCommand() {
         const command = {
             command: {
-                names: ['addrole', 'role', 'setrole'],
+                names: ["addrole", "role", "setrole"],
                 action: this.addRoleCommand,
-                parameters: '{{type}} {{mentions}}',
+                parameters: "{{type}} {{mentions}}",
             },
             authentication: RoleTypes.OWNER,
             description: {
-                message: 'Add a role to the auth types. You may use either `mod` or `admin`',
-                example: '{{prefix}}addrole mod @mods',
+                message: "Add a role to the auth types. You may use either `mod` or `admin`",
+                example: "{{prefix}}addrole mod @mods",
             },
         };
         return command;
